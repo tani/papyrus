@@ -23,7 +23,7 @@ $ lambda -l README.l.md # shortcut
 
 Or, in the REPL
 
-```
+``lisp
 > (lambda:load #p"README.l.md")
 ```
 
@@ -34,16 +34,17 @@ In the shell,
 ```sh
 $ lambda --html README.l.md # output .html file
 $ lambda --lisp README.l.md # output .lisp file
+$ lambda --markdown README.l.md # compiled .md file
 ```
 Or, in the REPL
 
-```
-> (lambda:output html #p"README.l.md")
-> (lambda:output lisp #p"README.l.md")
+```lisp
+> (lambda:output :html #p"README.l.md")
+> (lambda:output :lisp #p"README.l.md")
 ```
 
 ## Installation
 
-```
+```sh
 $ ros install ta2gch/lambda
 ```
