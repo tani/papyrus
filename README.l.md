@@ -23,10 +23,9 @@ $ lambda -l README.l.md # shortcut
 
 Or, in the REPL
 
-``lisp
+```lisp
 > (lambda:load #p"README.l.md")
 ```
-
 ### Output mode
 
 In the shell,
@@ -39,8 +38,9 @@ $ lambda --markdown README.l.md # compiled .md file
 Or, in the REPL
 
 ```lisp
-> (lambda:output :html #p"README.l.md")
-> (lambda:output :lisp #p"README.l.md")
+> (lambda:export :html #p"README.l.md")
+> (lambda:export :lisp #p"README.l.md")
+> (lambda:export :markdown #p"README.l.md")
 ```
 
 ## Installation
