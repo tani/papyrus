@@ -26,14 +26,14 @@ Or, in the REPL
 ```lisp
 > (lambda:load #p"README.l.md")
 ```
-### Output mode
+### export mode
 
 In the shell,
 
 ```sh
-$ lambda --html README.l.md # output .html file
-$ lambda --lisp README.l.md # output .lisp file
-$ lambda --markdown README.l.md # compiled .md file
+$ lambda --html README.l.md # export .html file
+$ lambda --lisp README.l.md # export .lisp file
+$ lambda --markdown README.l.md # export .md file
 ```
 Or, in the REPL
 
