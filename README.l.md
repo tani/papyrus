@@ -9,22 +9,22 @@ Lambda execute codeblock in `.l.md` as a code of Common Lisp
 
 In the shell,
 ```sh
-$ llmd --load README.l.md --quit # script
-$ llmd -l README.l.md -q # shortcut
+$ lambda --load README.l.md --quit # script
+$ lambda -l README.l.md -q # shortcut
 ```
 
 ### REPL mode
 
 In the shell,
 ```sh
-$ llmd --load README.l.md # launch the REPL
-$ llmd -l README.l.md # shortcut
+$ lambda --load README.l.md # launch the REPL
+$ lambda -l README.l.md # shortcut
 ```
 
 Or, in the REPL
 
 ```
-> (llmd :load #p"README.l.md")
+> (lambda:load #p"README.l.md")
 ```
 
 ### Output mode
@@ -32,14 +32,14 @@ Or, in the REPL
 In the shell,
 
 ```sh
-$ llmd --html README.l.md # output .html file
-$ llmd --lisp README.l.md # output .lisp file
+$ lambda --html README.l.md # output .html file
+$ lambda --lisp README.l.md # output .lisp file
 ```
 Or, in the REPL
 
 ```
-> (llmd :html #p"README.l.md")
-> (llmd :lisp #p"README.l.md")
+> (lambda:output html #p"README.l.md")
+> (lambda:output lisp #p"README.l.md")
 ```
 
 ## Installation
