@@ -1,0 +1,38 @@
+(in-package :cl-user)
+(defpackage :lambda
+  (:use :cl :lambda.util)
+  (:export :convert :load))
+(in-package :lambda.reader)
+(defun create-lambda-reader (language)
+  (labels ((judege (codeblock)
+             (if (equalp language :markdown)
+               (not codeblock)
+               codeblock)))
+    (lambda (stream c1 c2)
+      (do ((line (read-line stream nil nil))
+       (buffer (format nil "~a~a" c1 c2))
+       (codeblock nil))
+      (line (convert buffer)))
+      (cond
+    ((zerop (search (format nil "```~(~a~)" language) line))
+     (setf codeblock t))
+    ((zerop (search "```" line))
+     (setf codeblock nil))
+    ((judge codeblock)
+     (setf buffer (concatenate 'string buffer #(#\Newline) line)))))))
+(defun convert (from to)
+  (let ((*readtable* (copy-readtable nil)))
+	(set-dispatch-character
+      #\# #\Space
+	  (create-lambda-reader
+	    (cond
+          ((string= (pathname-type to) "l") :lisp)
+          ((string= (pathname-type to) "md") :markdown)
+          ((string= (pathname-type to) "html") :html))))
+    (with-open-file (in from)
+      (with-open-file (out to)
+	    (princ (read in) out)))))
+(defun load (pathspec)
+  (let ((*readtable* (copy-readtable nil)))
+    (set-dispatch-character #\# #\Space (create-reader :lisp)
+    (load pathspec))))
