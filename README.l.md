@@ -64,6 +64,9 @@ if you try this tutorial, save as `hello.l.md` the document which is used in thi
 
 ### REPL
 
+REPL is a good environment to try your documents of *Lamda*.
+we can load them and test the behaivor quickly. It is conveniense to use them with *SLIME*.
+
 #### Installation
 
 Sorry, *Lambda* is NOT available in QuickLisp.
@@ -100,3 +103,5 @@ Of cause, we can get a markdown without codeblocks which are between ` ```lisp `
     > (lambda:lambdaconvert #p"hello.l.md" #p"hello.md")
 
 As you notice, `lambda:lambdaconvert` detect the output file type automatically.
+
+### ASDF
