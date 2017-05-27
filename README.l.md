@@ -106,8 +106,52 @@ As you notice, `lambda:lambdaconvert` detect the output file type automatically.
 
 ### ASDF
 
-You can use *Lambda*'s syntax in your project without installation but in your `.asd` file you have to put a small snippet this project, *Lambda*, uses too. This snippet sets a reader macro which effects the ASDF's loading to load documents and defines a class to tell ASDF what are loadable.
+You can use *Lambda*'s syntax in your project without installation but in your `.asd` file you have to put a small snippet which this project, *Lambda*, uses too. This snippet sets a reader macro which effects the ASDF's loading to load documents and defines a class to tell ASDF what are loadable. Now let's write a small project whose tree of directories is a following.
 
-For example, A project tree is a following.
+    tutorial.asd
+    src/
+      tutorial.l.md
+
+`src/tutorial.l.md` is that you wrote in **REPL** section, and `tutorial.asd` is this.
+
+At first you write the definition of the package of this file.
+
+    (in-package :cl-user)
+    (defpackage :tutorial-asd
+      (:use :cl :asdf))
+    (in-package :tutorial-asd)
+
+And you put the snippet that sets a reader macro which effects the ASDF's loading to load documents and defines a class to tell ASDF what are loadable.
+
+    ;; TODO
+    (set-dispatch-character
+      #\# #\Space
+      (lambda (s c1 c2)
+        (do ((line (read-line s nil nil) (read-line s nil nil))
+             (buffer (format nil "~a~a" c1 c2))
+             (codeblock nil))
+            (line (read-from-string buffer))
+          (cond
+            ((zerop (search "```lisp" line))
+             (setf codeblock t))
+            ((zerop (search "```" line))
+             (setf codeblock nil))
+            (codeblock
+             (setf buffer (format nil "~a~%~a" buffer line)))))))
+
+At last you define a ASDF system using a new component class `:lmd`.
+
+    ;; TODO
+    (defsystem :tutorial
+      :author "Your Name"
+      :license "Unlicense"
+      :component ((:lmd "tutorial.l.md")))
+
+You will have two files, `src/tutorial.l.md` and `tutorial.asd`, and be able to load this system as always like this.
+
+    > (load #p"tutorial.asd")
+    nil
+    > (tutorial:hello)
+    Hello, World!
 
 Off course, users who use your project need nothing to load.
