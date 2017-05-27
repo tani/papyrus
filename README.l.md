@@ -65,7 +65,7 @@ if you try this tutorial, save as `hello.l.md` the document which is used in thi
 ### REPL
 
 REPL is a good environment to try your documents of *Lamda*.
-we can load them and test the behaivor quickly. It is conveniense to use them with *SLIME*.
+We can load them and test the behaivor quickly. It is conveniense to use them with *SLIME*.
 
 #### Installation
 
@@ -105,3 +105,9 @@ Of cause, we can get a markdown without codeblocks which are between ` ```lisp `
 As you notice, `lambda:lambdaconvert` detect the output file type automatically.
 
 ### ASDF
+
+You can use *Lambda*'s syntax in your project without installation but in your `.asd` file you have to put a small snippet this project, *Lambda*, uses too. This snippet sets a reader macro which effects the ASDF's loading to load documents and defines a class to tell ASDF what are loadable.
+
+For example, A project tree is a following.
+
+Off course, users who use your project need nothing to load.
