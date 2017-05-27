@@ -1,151 +1,108 @@
 # Lambda
+This project is a work in progress.
 
-*Lambda* is a literate LISP programming tool.
-You write a code once and get two texts, `.md` and `.lisp`. *Lambda* is a neme of programming style and utilities to do it.
+## Table of Contents
 
-## Usage
+1. About This Project
+    1. Philosophy
+    2. Copyright
+    3. License
+    4. Precaution
+2. Tutorial
+    1. REPL
+    2. ASDF
+    3. Command Line
+3. Source Code
+    1. Utilities
+    2. Library
+    3. Command Line
+4. Appendix
+    1. FAQ
+    2. License texts
 
-You have three ways to use *lambda*.
+## About This Project
+
+### Philosophy
+
+*Lambda* is a name of programming style and a tool to do it.
+The author of *Lambda* developed it to do literate programming in LISP better than WEB developed by Donald Knuth.
+WEB and it's derived softwares were used in various programming languages.
+They require developers compiling to get a source code.
+It is necessary to do literate programming in C and Pascal, but isn't necessary to do it in Common Lisp because Common Lisp has the reader macro which changes source code when the system reads it.
+
+<img src="img/web.png" width="300px"/>
+<img src="img/lambda.png" width="300px"/>
+
+*Lambda* makes your markdown executable with the reader macro of Common Lisp.
+For example, The author wrote this document in *Lambda*.
+You can execute `sbcl --script lambda.l.md`. How about this one? Let's make your project more beautiful.
+### Copyright
+
+Copyright (c) 2017 TANIGUCHI Masaya All Rights Reserved
+
+### License
+
+GPLv3. See the appendix.
+
+### Precaution
+
+This is a newborn project.
+Please send me your feedback when you find a issue.
+
+- [Project home](https://github.com/ta2gch/lambda)
+
+## Tutorial and Guideline
+
+You can write any documents but have to write a title (`#`) at the top of the file like a following.
+And if you try this tutorial, save this document as `hello.l.md`.
+
+    # My First Document
+
+    This is my first document.
+    This will say "Hello, world!".
+
+    ```lisp
+    (defun hello ()
+      (princ "Hello, world!"))
+    ```
+
+*Lambda* evaluate codeblocks between  ` ```lisp ` and ` ``` ` and does'nt evaluate other codeblocks which has four spaces or ` ```sh ` and ` ``` `.
+
+We can write documents of *Lambda* as Markdown  especially CommonMark. You can see the specification of CommonMark in [https://commonmark.org](https://commonmark.org).
+
+You have three ways to treat your documents.
 
 - REPL
-- Shell
 - ASDF
+- Command Line
+
+These are tutorials. For more information, please see the **Source Code** section.
 
 ### REPL
 
 #### Installation
 
-You can install *lambda* by Quicklisp.
+Sorry, *Lambda* is NOT available in QuickLisp but I'll do it in the feature. Then,
 
-    (ql:quickload :lambda)
+    > (ql:quickload :lambda)
 
-#### Functions
+Currently, You can install *Lambda* with [Roswell](https://github.com/roswell/roswell).
 
-*lambda* provides two functions.
+    $ ros install ta2gch/lambda
 
-- convert
-- load
+It will install a comman line tool when It does.
+Please see also **Command Line** section.
 
-```lisp
-(in-package :cl-user)
-(defpackage :lambda
-  (:use :cl :lambda.util)
-  (:export :convert :load))
-(in-package :lambda.reader)
-```
+#### Load a Document
 
-```lisp
-(defun create-lambda-reader (language)
-  (labels ((judege (codeblock)
-             (if (equalp language :markdown)
-               (not codeblock)
-               codeblock)))
-    (lambda (stream c1 c2)
-      (do ((line (read-line stream nil nil))
-       (buffer (format nil "~a~a" c1 c2))
-       (codeblock nil))
-      (line (convert buffer)))
-      (cond
-    ((zerop (search (format nil "```~(~a~)" language) line))
-     (setf codeblock t))
-    ((zerop (search "```" line))
-     (setf codeblock nil))
-    ((judge codeblock)
-     (setf buffer (concatenate 'string buffer #(#\Newline) line)))))))
-```
+*Lambda* provides few functions. For example, to make your REPL loding the file written in *Lambda*;
 
-##### Convert
+    > (lambda:lambdaload #p"hello.l.md")
+    nil
+    > (hello)
+    Hello, World!
 
-```lisp
-(defun convert (from to)
-  (let ((*readtable* (copy-readtable nil)))
-	(set-dispatch-character
-      #\# #\Space
-	  (create-lambda-reader
-	    (cond
-          ((string= (pathname-type to) "l") :lisp)
-          ((string= (pathname-type to) "md") :markdown)
-          ((string= (pathname-type to) "html") :html))))
-    (with-open-file (in from)
-      (with-open-file (out to)
-	    (princ (read in) out)))))
-```
+`lambda:lambdaload` is the same interface of `cl:load`.
+To load many files written in *Lambda* at once see **ASDF** section.
 
-`lambda:convert` converts from `.l.md` to three types.
-
-###### Lisp
-
-`lambda:convert` extracts codeblocks in source code and merges them.
-
-    (lambda:convert #p"README.l.md" #p"README.l")
-
-###### Markdown
-
-`lambda:convert` removes codeblocks between ` ```lisp ` and ` ``` `.
-
-    (lambda:convert #p"README.l.md" #p"README.md")
-
-###### HTML
-
-`lambda:convert` remove codeblocks and converts to HTML.
-
-    (lambda:convert #p"README.l.md" #p"README.html")
-
-##### Load
-
-```lisp
-(defun load (pathspec)
-  (let ((*readtable* (copy-readtable nil)))
-    (set-dispatch-character #\# #\Space (create-reader :lisp)
-    (load pathspec))))
-```
-
-`lambda:load` loads `.l.md` as lisp.
-
-    (lambda:load #p"README.l.md")
-
-### Shell
-
-#### Installation
-
-You can install *lambda* with _Roswell_.
-
-    ros install ta2gch/lambda
-
-#### Convert
-
-*lambda* extract codeblocks in source code and merge them.
-
-    lambda README.l.md README.l
-
-And remove codeblocks between ` ```lisp ` and ` ``` `.
-
-    lambda README.l.md README.md
-
-### ASDF
-
-In ASDF, you have to write this in .asd file to load .l.md file.
-
-    (set-dispatch-character
-     #\# #\Space
-     (lambda (s c1 c2)
-       (read-from-string
-        (do ((line (read-line stream nil nil))
-         (buffer (format nil "~a~a" c1 c2))
-         (codeblock nil))
-        (line buffer)
-          (cond
-        ((zerop (search "```lisp" line)) (setf codeblock t))
-        ((zerop (search "```" line)) (setf codeblock nil))
-        (codeblock
-         (setf buffer (concatenate 'string buffer #(#\Newline) line))))))))
-
-This snippet is licensed PUBLIC DOMAIN.
-
-## License
-
-This project is licensed under the GPLv3.0 but that snippet is not.
-
-## Copyright
-
-Copyright &copy 2017 TANIGUCHI Masaya All Rights Reserved.
+#### Convert a Document
