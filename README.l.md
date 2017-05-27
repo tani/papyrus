@@ -55,7 +55,7 @@ Please send me your feedback when you find a issue.
 
 ## Tutorial and Guideline
 
-In *Lambda*, you can write any texts but have to write a title (`#`) at the top of the file like a following and make the extension of filename `.l.md` which is called '_la - mbda_.' You know we write documents of *Lambda* as Markdown especially CommonMark. You can see the specification of CommonMark in [https://commonmark.org](https://commonmark.org), and *Lambda* evaluate codeblocks between  ` ```lisp ` and ` ``` ` and does'nt evaluate other codeblocks which has four spaces or ` ```sh ` and ` ``` `.
+In *Lambda*, you can write any texts but have to write a title (`#`) at the top of the file like a following and make the extension of file name being `.l.md` and write with Markdown especially CommonMark You can see the specification of CommonMark in [commonmark.org](https://commonmark.org). And Lambda evaluate codeblocks between ` ```lisp ` and ` ``` ` and does'nt evaluate other codeblocks which has four spaces or ` ```sh ` and ` ``` `.
 
     # My First Document
 
@@ -66,14 +66,9 @@ In *Lambda*, you can write any texts but have to write a title (`#`) at the top 
     (defun hello ()
       (princ "Hello, world!"))
     ```
+
 if you try this tutorial, save as `hello.l.md` the document which is used in this section.
-Now, you have three ways to treat your documents.
-
-- REPL
-- ASDF
-- Command Line
-
-These are quick tutorials for them. For more information, please see the **Source Code** section.
+Now, to treat your documents you have three ways, **REPL**, **ASDF** and **Command Line**. And these are quick tutorials for them. For more information, please see the **Source Code** section.
 
 ### REPL
 
