@@ -30,8 +30,10 @@ WEB and it's derived softwares were used in various programming languages.
 They require developers compiling to get a source code.
 It is necessary to do literate programming in C and Pascal, but isn't necessary to do it in Common Lisp because Common Lisp has the reader macro which changes source code when the system reads it.
 
-<img src="img/web.png" width="300px"/>
-<img src="img/lambda.png" width="300px"/>
+<div style="display:float;">
+  <img src="img/web.png" width="250px"/>
+  <img src="img/lambda.png" width="250px"/>
+</div>
 
 *Lambda* makes your markdown executable with the reader macro of Common Lisp.
 For example, The author wrote this document in *Lambda*.
@@ -53,8 +55,7 @@ Please send me your feedback when you find a issue.
 
 ## Tutorial and Guideline
 
-You can write any documents but have to write a title (`#`) at the top of the file like a following.
-And if you try this tutorial, save this document as `hello.l.md`.
+You can write any documents but have to write a title (`#`) at the top of the file like a following, and if you try this tutorial, save this document as `hello.l.md`.
 
     # My First Document
 
@@ -70,7 +71,7 @@ And if you try this tutorial, save this document as `hello.l.md`.
 
 We can write documents of *Lambda* as Markdown  especially CommonMark. You can see the specification of CommonMark in [https://commonmark.org](https://commonmark.org).
 
-You have three ways to treat your documents.
+Now, you have three ways to treat your documents.
 
 - REPL
 - ASDF
