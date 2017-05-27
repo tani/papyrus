@@ -155,3 +155,15 @@ You will have two files, `src/tutorial.l.md` and `tutorial.asd`, and be able to 
     Hello, World!
 
 Off course, users who use your project need nothing to load.
+
+### Command Line
+
+Command Line tool is a Roswell script. if you begin to read the tutorial from this secion, you have to install with Roswell.
+
+    $ ros install ta2gch/lambda
+
+*Lambda* provides `lambda` command which is `~/.roswell/bin/lambda`. The interface and function are same of `lambda:lambdaconvert` in **REPL** section, so you can use these.
+
+    $ lambda convert tutorial.l.md tutorial.lisp
+    $ lambda convert tutorial.l.md tutorial.md
+    $ lambda convert tutorial.l.md tutorial.html
