@@ -66,24 +66,37 @@ if you try this tutorial, save as `hello.l.md` the document which is used in thi
 
 #### Installation
 
-Sorry, *Lambda* is NOT available in QuickLisp but I'll do it in the feature. Then,
-
-    > (ql:quickload :lambda)
-
+Sorry, *Lambda* is NOT available in QuickLisp.
 Currently, You can install *Lambda* with [Roswell](https://github.com/roswell/roswell).
 
     $ ros install ta2gch/lambda
 
-It will install a comman line tool when It does.
-Please see also **Command Line** section.
+It will install a comman line tool.
+See also **Command Line** section.
 
 #### Load a Document
 
-*Lambda* provides few functions. For example, to make your REPL loding the file written in *Lambda*;
+*Lambda* provides some functions. For example, to make your REPL loding the file written in *Lambda*;
 
     > (lambda:lambdaload #p"hello.l.md")
     nil
     > (hello)
     Hello, World!
 
-`lambda:lambdaload` is the same interface of `cl:load`. To load many files written in *Lambda* at once see **ASDF** section.
+`lambda:lambdaload` is the same interface of `cl:load`. To load many files written in *Lambda* at once you have to write a ASDF system. See **ASDF** section.
+
+#### Convert a Document
+
+It has already made been beautifull that the documents of *Lambda* is, but if you need to get a Common Lisp code to make your project a production, *Lambda* provides a usefully tool.
+
+    > (lambda:lambdaconvert #p"hello.l.md" #p"hello.lisp")
+
+Or if you need a complete HTML file of your project, I recommend you using Pandoc, but Lambda provides too.
+
+    > (lambda:lambdaconvert #p"hello.l.md" #p"hello.html")
+
+Of cause, we can get a markdown without codeblocks which are between ` ```lisp ` and ` ``` `.
+
+    > (lambda:lambdaconvert #p"hello.l.md" #p"hello.md")
+
+As you notice, `lambda:lambdaconvert` detect the output file type automatically.
