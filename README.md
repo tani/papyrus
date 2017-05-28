@@ -77,9 +77,10 @@ codeblocks *after* the title (`# `). The indented codeblock *before* the title
 Please don't forget.
 
         (in-package :cl-user)
-        (defpackage :lambda.Tutorial
-          (:use :cl :lambda :named-readtables))
-        (in-package :lambda.Tutorial)
+        (defpackage :tutorial
+          (:use :cl :lambda :named-readtables)
+          (:export :hello)
+        (in-package :tutorial)
         (in-readtable :lambda)
 
     # My First Document
@@ -111,18 +112,19 @@ Sorry, *Lambda* is NOT available in QuickLisp. Currently, You can install
 
 Next you can load document like a following.
 
+    > (require :lambda)
+    nil
     > (load #p"tutorial.l.md")
     nil
-    > (hello)
+    > (tutorial:hello)
     Hello, World!
 
 ### ASDF
 
-Let's write a small project whose tree of directories is a following.
+Let's write a small project whose files is a following.
 
     tutorial.asd
-    src/
-      tutorial.l.md
+    tutorial.l.md
 
 `src/tutorial.l.md` is that you wrote in **REPL** section, and `tutorial.asd`
 is this.
@@ -132,18 +134,23 @@ is this.
       (:use :cl :asdf))
     (in-package :tutorial-asd)
     
+    (defclass lmd (cl-source-file)
+      ((type :initform "md")))
+    
     (defsystem tutorial
       :version "0.1"
       :author "Your name"
       :license "MIT"
       :depends-on (:lambda :named-readtables)
-      :components ((:file #p"tutorial.l.md"))
+      :components ((:lmd "tutorial.l"))
       :description "A Literate Programming Framework")
 
 Now, you have two files, `src/tutorial.l.md` and `tutorial.asd`, and be able to
 load this system as always like this.
 
     > (load #p"tutorial.asd")
+    nil
+    > (require :tutorial)
     nil
     > (tutorial:hello)
     Hello, World!
