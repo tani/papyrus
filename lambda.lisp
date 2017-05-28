@@ -1,8 +1,8 @@
 (in-package #:cl-user)
-(defpackage #:lambda.readtable
+(defpackage #:lambda
   (:use :cl :named-readtables)
   (:export #:lambda))
-(in-package #:lambda.readtable)
+(in-package #:lambda)
 
 (defun lambda-reader (s a b)
   (declare (ignore a b))
