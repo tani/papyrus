@@ -24,7 +24,7 @@ information, please see the **Source Code** section.
 
 ### REPL
 
-REPL is a good environment to try your documents of *Lamda*. We can load them
+a REPL is a good environment to try your documents of *Lamda*. We can load them
 and test the behaivor quickly and it is conveniense to use them with *SLIME*.
 
 #### Installation
@@ -38,8 +38,8 @@ It will install a comman line tool. See also **Command Line** section.
 
 #### Load a Document
 
-*Lambda* provides some functions. For example, to make your REPL loding the
-file written in *Lambda*;
+*Lambda* provides some functions. For example, to make a REPL loding a
+document written in *Lambda*;
 
     > (lambda:lambdaload #p"hello.l.md")
     nil
