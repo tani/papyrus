@@ -13,9 +13,6 @@ This project is a work in progress.
     2. ASDF
     3. Command Line
 3. Source Code
-    1. Utilities
-    2. Library
-    3. Command Line
 4. Appendix
     1. FAQ
     2. License texts
@@ -64,18 +61,15 @@ if you try this tutorial, save as `hello.l.md` the document which is used in thi
 
 ### REPL
 
-REPL is a good environment to try your documents of *Lamda*.
-We can load them and test the behaivor quickly. It is conveniense to use them with *SLIME*.
+REPL is a good environment to try your documents of *Lamda*. We can load them and test the behaivor quickly and it is conveniense to use them with *SLIME*.
 
 #### Installation
 
-Sorry, *Lambda* is NOT available in QuickLisp.
-Currently, You can install *Lambda* with [Roswell](https://github.com/roswell/roswell).
+Sorry, *Lambda* is NOT available in QuickLisp. Currently, You can install *Lambda* with [Roswell](https://github.com/roswell/roswell).
 
     $ ros install ta2gch/lambda
 
-It will install a comman line tool.
-See also **Command Line** section.
+It will install a comman line tool. See also **Command Line** section.
 
 #### Load a Document
 
@@ -167,3 +161,107 @@ Command Line tool is a Roswell script. if you begin to read the tutorial from th
     $ lambda convert tutorial.l.md tutorial.lisp
     $ lambda convert tutorial.l.md tutorial.md
     $ lambda convert tutorial.l.md tutorial.html
+
+### Source Code
+
+*Lambda* is a small script. In this Section, we provides `lambda:lambdaconvert` `lambda:lambdaload`, and you can use `lmd` as the nickname.
+
+```lisp
+(in-package :cl-user)
+(defpackage :lambda
+  (:nicknames :lmd)
+  (:use :cl :3bmd)
+  (:export :lambdaload :lambdaconvert))
+(in-package :lambda)
+```
+
+#### Copy `*readtable*`
+
+To save global `*readtable*` copy local variable with `let`.
+
+```lisp
+(defmacro local-readtable (&body body)
+  `(let ((*readtable* (copy-readtable nil)))
+     ,@body))
+```
+
+#### Define *Lambda* reader
+
+Main algorithm of *Lambda* reader is taht `lambda-reader/step` add `line` into `buffer` in a codeblock.
+
+```lisp
+(defmacro lambda-reader/step (buffer line codeblock op)
+  `(cond
+     ((equalp 0 (search "```lisp" ,line)) (setf ,codeblock t))
+     ((equalp 0 (search "```" ,line)) (setf ,codeblock nil))
+     ((funcall ,op codeblock)
+	  (setf ,buffer (format nil "~a~%~a" ,buffer ,line)))))
+```
+
+Main loop of *Lambda* reader do `lambda-reader/step` until the end of file, and return the result that Common Lisp has eveluated `buffer`.
+
+```lisp
+(defun lambda-reader/main (stream op)
+  (do ((line (read-line stream nil nil)
+             (read-line stream nil nil))
+       (buffer (if (funcall op nil) "# " ""))
+       (codeblock nil))
+      ((not line) buffer)
+    (lambda-reader/step buffer line codeblock op)))
+```
+
+```lisp
+(defun lambda-reader (stream c1 c2)
+  (declare (ignore c1 c2))
+  (read-from-string
+   (format nil "(progn ~a)"
+		   (lambda-reader/main stream  #'identity))))
+```
+
+#### Define `lambdaload`
+`lambdaload` sets `lambda-reader` into local `*readtable*` and calls `cl:load` function.
+
+```lisp
+(defun lambdaload (pathspec)
+  (local-readtable
+   (set-dispatch-macro-character #\# #\Space #'lambda-reader)
+   (with-open-file (in pathspec) (load in))))
+```
+
+#### Define `lambdaconvert`
+
+```lisp
+(defun lambdaconvert/lisp (src dist)
+  (with-open-file (in src)
+    (with-open-file (out dist)
+      (princ (lambda-reader/main in #'identity) out))))
+```
+
+```lisp
+(defun lambdaconvert/markdown (src dist)
+  (with-open-file (in src)
+    (with-open-file (out dist)
+      (princ (lambda-reader/main in #'not) out))))
+```
+
+```lisp
+(defun lambdaconvert/html (src dist)
+  (with-open-file (in src)
+    (with-open-file (out dist)
+	  (parse-string-and-print-to-stream
+	    (lambda-reader/main in #'not) out))))
+```
+
+```lisp
+(defun lambdaconvert (src dist)
+  (cond
+   ((or (string= "md" (pathname-type dist))
+		(string= "markdown" (pathname-type dist)))
+	(lambdaconvert/markdown src dist))w
+   ((string= "html" (pathname-type dist))
+	(lambdaconvert/html src dist))
+   ((or (string= "lisp" (pathname-type dist))
+		(string= "lsp" (pathname-type dist))
+		(string= "l" (pathname-type dist)))
+	(lambdaconvert/markdown src dist))))
+```
