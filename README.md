@@ -56,7 +56,7 @@ Copyright (c) 2017 TANIGUCHI Masaya All Rights Reserved
 
 ### License
 
-GPLv3. See the [license texts](./LICENSE).
+MIT. See the [license texts](./LICENSE).
 
 ### Precaution
 
