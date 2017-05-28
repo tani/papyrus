@@ -1,3 +1,10 @@
+
+    (in-package :cl-user)
+    (defpackage :lambda.README
+      (:use :cl :lambda :named-readtables))
+    (in-package :lambda.README)
+    (in-readtable :lambda)
+
 # Lambda
 This project is a work in progress.
 
