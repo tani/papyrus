@@ -214,9 +214,9 @@ so you can use these.
 (in-package :lambda)
 ```
 
-#### Copy `*readtable*`
+#### Copy a `*readtable*`
 
-To save global `*readtable*` copy local variable with `let`.
+It asigns global `*readtable*` to local variable.
 
 ```lisp
 (defmacro local-readtable (&body body)
@@ -224,10 +224,9 @@ To save global `*readtable*` copy local variable with `let`.
      ,@body))
 ```
 
-#### Define *Lambda* reader
+#### Read All Texts from the File
 
-Main algorithm of *Lambda* reader is taht `lambda-reader/step` add `line` into
-`buffer` in a codeblock.
+Main algorithm of *Lambda* reader is taht adds `line` `buffer` in a codeblock.
 
 ```lisp
 (defmacro lambda-reader/step (buffer line codeblock op)
@@ -238,8 +237,9 @@ Main algorithm of *Lambda* reader is taht `lambda-reader/step` add `line` into
       (setf ,buffer (format nil "~a~%~a" ,buffer ,line)))))
 ```
 
-Main loop of *Lambda* reader do `lambda-reader/step` until the end of file, and
-return the result that Common Lisp has eveluated `buffer`.
+Main loop of *Lambda* reader is that does `lambda-reader/step` until the end of
+file, and return the result as string. `op` in the arguments expects `cl:not`
+or `cl:identity`.
 
 ```lisp
 (defun lambda-reader/main (stream op)
@@ -251,6 +251,9 @@ return the result that Common Lisp has eveluated `buffer`.
     (lambda-reader/step buffer line codeblock op)))
 ```
 
+It returns symbols wrapped with `(progn)` and it is asigned `# ` of
+`*readtable*` in the next chapter.
+
 ```lisp
 (defun lambda-reader (stream c1 c2)
   (declare (ignore c1 c2))
@@ -258,9 +261,9 @@ return the result that Common Lisp has eveluated `buffer`.
    (format nil "(progn ~a)" (lambda-reader/main stream  #'identity))))
 ```
 
-#### Define `lambdaload`
-`lambdaload` sets `lambda-reader` into local `*readtable*` and calls `cl:load`
-function.
+#### Load a Script
+
+It asigns `lambda:lambda-reader` to `# ` of `*readtable*` and calls `cl:load`.
 
 ```lisp
 (defun lambdaload (pathspec)
@@ -269,47 +272,70 @@ function.
    (with-open-file (in pathspec) (load in))))
 ```
 
-#### Define `lambdaconvert`
+#### Convert a Document
+
+It extracts codeblock of lisp from `src` and saves as `dest`.
 
 ```lisp
-(defun lambdaconvert/lisp (src dist)
+(defun lambdaconvert/lisp (src dest)
   (with-open-file (in src)
-    (with-open-file (out dist)
+    (with-open-file (out dest)
       (princ (lambda-reader/main in #'identity) out))))
 ```
 
+It extracts markdown from `src` and saves as `dest`.
+
 ```lisp
-(defun lambdaconvert/markdown (src dist)
+(defun lambdaconvert/markdown (src dest)
   (with-open-file (in src)
-    (with-open-file (out dist)
+    (with-open-file (out dest)
       (princ (lambda-reader/main in #'not) out))))
 ```
 
+It extracts markdown and converts HTML, finally saves as `dest`.
+
 ```lisp
-(defun lambdaconvert/html (src dist)
+(defun lambdaconvert/html (src dest)
   (with-open-file (in src)
-    (with-open-file (out dist)
+    (with-open-file (out dest)
       (parse-string-and-print-to-stream
         (lambda-reader/main in #'not) out))))
 ```
 
+It detects the extension of given file and uses `pathname-type` that
+will return `".md"` which is same as `tutorial.md` when is given
+`tutorial.l.md`.
+
+- `md` `markdown`
+- `html`
+- `lisp` `lsp` `l`
+
 ```lisp
-(defun lambdaconvert (src dist)
+(defun lambdaconvert (src dest)
   (cond
-   ((or (string= "md" (pathname-type dist))
-        (string= "markdown" (pathname-type dist)))
-    (lambdaconvert/markdown src dist))w
-   ((string= "html" (pathname-type dist))
-    (lambdaconvert/html src dist))
-   ((or (string= "lisp" (pathname-type dist))
-        (string= "lsp" (pathname-type dist))
-        (string= "l" (pathname-type dist)))
-    (lambdaconvert/lisp src dist))))
+   ((or (string= "md" (pathname-type dest))
+        (string= "markdown" (pathname-type dest)))
+    (lambdaconvert/markdown src dest))w
+   ((string= "html" (pathname-type dest))
+    (lambdaconvert/html src dest))
+   ((or (string= "lisp" (pathname-type dest))
+        (string= "lsp" (pathname-type dest))
+        (string= "l" (pathname-type dest)))
+    (lambdaconvert/lisp src dest))))
 ```
 
 ## Appendix
 
+### FAQ
+
+- Why doesn't *Lambda* have something like `<<foo>>=` ?
+  Because CommonLisp has already had the great flexible macro system.
+  You have to use it.
+
 ### Emacs Lisp
+
+If you use emacs, there are `mmm-mode` which highlights the syntax of lisp
+codeblock of Markdown, but SLIME doesn't works well in `mmm-mode`.
 
     (require 'mmm-mode)
     (setq mmm-global-mode 'maybe)
