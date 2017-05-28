@@ -14,8 +14,8 @@ A literate programming tool
     1. Philosophy
     2. Copyright
     3. License
-    4. Precaution
-2. Tutorial
+    4. Precautions
+2. Tutorials
     1. REPL
     2. ASDF
 3. Reference
@@ -28,12 +28,13 @@ A literate programming tool
 
 ### Philosophy
 
-*Lambda* is a name of programming style and a tool to do it. The author of
-*Lambda* developed it to do literate programming in LISP better than WEB
-developed by Donald Knuth. WEB and it's derived softwares were used in various
-programming languages. They require developers compiling to get a source code.
-It is necessary to do literate programming in C and Pascal, but isn't necessary
-to do it in Common Lisp because Common Lisp has the reader macro which changes
+*Lambda* is the name of a programming style as well as the name of a tool 
+with which to implement it. The author of *Lambda* developed it to do 
+literate programming in LISP better than WEB, developed by Donald Knuth. 
+WEB and it's derived softwares are used in various programming languages. 
+They require developers compiling with them to obtain the source code.
+It is required in order to do literate programming in C and Pascal, but isn't 
+in Common Lisp because Common Lisp has the reader macro which changes the
 source code when the system reads it.
 
 <div style="display:flex;height:200px;justify-content:center;">
@@ -42,9 +43,9 @@ source code when the system reads it.
 </div>
 
 *Lambda* makes your markdown executable with the reader macro of Common Lisp.
-For example, the author wrote this document with *Lambda*. You can execute 
-`ros run -l lambda.asd -e '(require :lambda)' -l README.md -q`.
-How about this one? Let's make your project more beautiful and useful!
+For example, the author wrote this document with *Lambda*. You can execute it 
+by running `ros run -l lambda.asd -e '(require :lambda)' -l README.md -q`.
+How about this? Let's make your project more beautiful and useful!
 
 ```lisp
 (princ "Hello, Lambda!")
@@ -60,21 +61,21 @@ MIT. See the [license texts](./LICENSE).
 
 ### Precaution
 
-This is a newborn project. Please send me your feedback when you find a issue.
+This is a new project. Please send me your feedback if you find any issues.
 
 - [Project home](https://github.com/ta2gch/lambda)
 
 ## Tutorials
 
-In *Lambda*, you can write any texts but have to write a title (`#`) at the top
-of the document like a following and make the extension of the file being
-`.l.md` or `.md`. To distinguish from non-executable Markdown, I recommend using
-`.l.md`. And you can write with Markdown especially CommonMark whose
-specification is in [commonmark.org](https://commonmark.org). And *Lambda*
-evaluate codeblocks between ` ```lisp ` and ` ``` ` and does'nt evaluate other
-codeblocks *after* the title (`# `). The indented codeblock *before* the title
-(`# `) is important, this is a codeblock and is a definition of package.
-Please don't forget.
+In *Lambda*, you can write any text but you have to write a title (`# `) at 
+the top of the document, like the following, and make the file extension
+`.l.md` or `.md`. In order to make it distinguishable from non-executable 
+Markdown, I recommend using `.l.md`. Also, you can write with Markdown, 
+especially CommonMark whose specification can be found at 
+[commonmark.org](https://commonmark.org). *Lambda* only evaluates codeblocks
+*after* the title (`# `) that are enclosed by ` ```lisp ` and ` ``` `. The 
+indented codeblock *before* the title (`# `) is important, as this codeblock 
+specifies the required packages. Please do not forget it.
 
         (in-package :cl-user)
         (defpackage :tutorial
@@ -93,24 +94,25 @@ Please don't forget.
       (princ "Hello, world!"))
     ```
 
-if you try this tutorial, save as `tutorial.l.md` the document which is used in
-this section. Now, to treat your documents you have two ways, **REPL** and
-**ASDF**. And these are quick tutorials for them. For more information, please
-see the **Reference** section.
+If you try this tutorial, save it as `tutorial.l.md`, as this is the filename
+used in this section. Now, there are two ways to generate the document, 
+**REPL** and **ASDF**. The following are quick tutorials for each. For more 
+information, please see the **Reference** section.
 
 ### REPL
 
-a REPL is a good environment to try your documents of *Lamda*. We can load them
-and test the behaivor quickly and it is conveniense to use them with *SLIME*.
+A REPL is a good environment to experiment with your *Lamda* documents. We 
+can load them and test the behaivor quickly and it is convenient to use them
+with *SLIME*.
 
 #### Installation
 
-Sorry, *Lambda* is NOT available in QuickLisp. Currently, You can install
-*Lambda* with [Roswell](https://github.com/roswell/roswell).
+Unfortunately, *Lambda* is NOT available in QuickLisp. Currently, You can 
+install *Lambda* with [Roswell](https://github.com/roswell/roswell).
 
     $ ros install ta2gch/lambda
 
-Next you can load document like a following.
+Next you can load document as follows:
 
     > (require :lambda)
     nil
@@ -121,13 +123,13 @@ Next you can load document like a following.
 
 ### ASDF
 
-Let's write a small project whose files is a following.
+Let's write a small project whose files are the following.
 
     tutorial.asd
     tutorial.l.md
 
-`src/tutorial.l.md` is that you wrote in **REPL** section, and `tutorial.asd`
-is this.
+`src/tutorial.l.md` is the file written in the **REPL** section, and 
+`tutorial.asd` is this:
 
     (in-package :cl-user)
     (defpackage tutorial-asd
@@ -145,8 +147,8 @@ is this.
       :components ((:lmd "tutorial.l"))
       :description "A Literate Programming Framework")
 
-Now, you have two files, `src/tutorial.l.md` and `tutorial.asd`, and be able to
-load this system as always like this.
+Now that you have both files, `src/tutorial.l.md` and `tutorial.asd`, 
+you will be able to load this system like this.
 
     > (load #p"tutorial.asd")
     nil
@@ -155,7 +157,7 @@ load this system as always like this.
     > (tutorial:hello)
     Hello, World!
 
-Off course, users who use your project need nothing to load.
+Of course, users of your project won't need to load anything else.
 
 ## Reference
 
@@ -171,7 +173,7 @@ This is a readtable defined by `named-readtables`. You can use this with
 
     # Sample
 
-    This is a sample code. Following function just say "Hello, world!";
+    This is a sample code. The following function just says "Hello, world!"
 
     ```lisp
     (defun sample-function () (princ "Hello, world!"))
@@ -182,13 +184,13 @@ This is a readtable defined by `named-readtables`. You can use this with
 ### FAQ
 
 - Why doesn't *Lambda* have something like `<<foo>>=` ?
-  Because CommonLisp has already had the great flexible macro system.
+  Because CommonLisp already has the great, flexible macro system.
   You have to use it.
 
 ### Emacs Lisp
 
-If you use emacs, there are `mmm-mode` which highlights the syntax of lisp
-codeblock of Markdown, but SLIME doesn't works well in `mmm-mode`.
+If you use emacs, there is `mmm-mode` which highlights the syntax of lisp
+codeblocks in Markdown, but SLIME doesn't works well in `mmm-mode`.
 
     (require 'mmm-mode)
     (setq mmm-global-mode 'maybe)
