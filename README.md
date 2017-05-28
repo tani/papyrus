@@ -171,6 +171,7 @@ This is a readtable defined by `named-readtables`. You can use this with
           (:use :cl :named-readtables :lambda)
           (:export #:sample-function))
         (in-package :lambda)
+        (in-readtable :lambda)
 
     # Sample
 
