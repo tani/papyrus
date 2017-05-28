@@ -117,14 +117,15 @@ At first you write the definition of the package of this file.
 
 And you put the snippet that sets a reader macro which effects the ASDF's loading to load documents and defines a class to tell ASDF what are loadable.
 
-    ;; TODO
-    (set-dispatch-character
+    (set-dispatch-macro-character
       #\# #\Space
       (lambda (s c1 c2)
+        (declare (ignore c1 c2))
         (do ((line (read-line s nil nil) (read-line s nil nil))
-             (buffer (format nil "~a~a" c1 c2))
+             (buffer "")
              (codeblock nil))
-            (line (read-from-string buffer))
+            ((not line)
+             (read-from-string (format nil "(progn ~a)" buffer)))
           (cond
             ((zerop (search "```lisp" line))
              (setf codeblock t))
