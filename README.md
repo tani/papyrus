@@ -68,12 +68,11 @@ This is a newborn project. Please send me your feedback when you find a issue.
 
 In *Lambda*, you can write any texts but have to write a title (`#`) at the top
 of the document like a following and make the extension of the file being
-`.l.md` or `.md`. To distinguish from non-executable Markdown I recommend using
-`.l.md` as the extension of the file. And you can write with Markdown
-especially CommonMark whose specification is in
-[commonmark.org](https://commonmark.org). And *Lambda* evaluate codeblocks
-between ` ```lisp ` and ` ``` ` and does'nt evaluate indented codeblocks
-and others *after* the title (`# `). The indented codeblock *before* the title
+`.l.md` or `.md`. To distinguish from non-executable Markdown, I recommend using
+`.l.md`. And you can write with Markdown especially CommonMark whose
+specification is in [commonmark.org](https://commonmark.org). And *Lambda*
+evaluate codeblocks between ` ```lisp ` and ` ``` ` and does'nt evaluate other
+codeblocks *after* the title (`# `). The indented codeblock *before* the title
 (`# `) is important, this is a codeblock and is a definition of package.
 Please don't forget.
 
