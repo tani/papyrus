@@ -6,7 +6,7 @@
     (in-readtable :lambda)
 
 # Lambda
-This project is a work in progress.
+A literate programming tool
 
 ## Table of Contents
 
