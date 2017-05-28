@@ -1,7 +1,12 @@
 ### Source Code
 
-*Lambda* is a small script. In this Section, we provides `lambda:lambdaconvert`
-`lambda:lambdaload`, and you can use `lmd` as the nickname.
+The code of *Lambda* is very simple.
+In this Section, *Lambda* defines `lambda:lambdaconvert` and
+`lambda:lambdaload`.
+
+Here is a definition of this package. The nicknames is `lmd` you can use it
+in a REPL like `lmd:lambdaconvert`. *Lambda* uses `3bmd` to covert a document
+from Markdown to HTML.
 
 ```lisp
 (in-package :cl-user)
