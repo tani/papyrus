@@ -8,6 +8,5 @@
   :author "TANIGUCHI Masaya"
   :license "GPLv3"
   :depends-on (:named-readtables)
-  :components ((:file "lambda")
-	       (:file #p"package.l.md"))
+  :components ((:file "lambda"))
   :description "A Literate Programming Framework")

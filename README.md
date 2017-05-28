@@ -1,10 +1,9 @@
 
     (in-package #:cl-user)
-    (defpackage #:lambda
-      (:use :cl :lambda.readtable :named-readtables)
-      (:export #:lambda)
-    (in-package #:lambda)
-    (in-readtable #:lambda)
+    (defpackage #:lambda.README
+      (:use :cl :lambda :named-readtables))
+    (in-package #:lambda.README)
+    (in-readtable :lambda)
 
 # Lambda
 This project is a work in progress.
@@ -20,6 +19,7 @@ This project is a work in progress.
     1. REPL
     2. ASDF
 3. Reference
+    1. Lamdba
 4. Appendix(./appendix.md)
     1. FAQ
     3. Emacs Lisp
@@ -42,9 +42,14 @@ source code when the system reads it.
 </div>
 
 *Lambda* makes your markdown executable with the reader macro of Common Lisp.
-For example, the author wrote this document in *Lambda*. You can execute `sbcl
---script lambda.l.md`. How about this one? Let's make your project more
-beautiful.
+For example, the author wrote this document with *Lambda*. You can execute 
+`ros run -l lambda.asd -e '(require :lambda)' -l README.md -q`.
+How about this one? Let's make your project more beautiful and useful!
+
+```lisp
+(princ "Hello, Lambda!")
+```
+
 ### Copyright
 
 Copyright (c) 2017 TANIGUCHI Masaya All Rights Reserved
@@ -66,7 +71,9 @@ of the document like a following and make the extension of file name being
 `.l.md` and write with Markdown especially CommonMark whose specification is in
 [commonmark.org](https://commonmark.org). And *Lambda* evaluate codeblocks
 between ` ```lisp ` and ` ``` ` and does'nt evaluate other codeblocks which has
-four spaces or ` ```sh ` and ` ``` `.
+four spaces *after* the title (`# `), or ` ```sh ` and ` ``` `.
+The four spaces *before* the title (`# `) is important, this is a codeblock
+and is a definition of package. Please don't forget.
 
         (in-package :cl-user)
         (defpackage :lambda.Tutorial
