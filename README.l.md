@@ -16,6 +16,7 @@ This project is a work in progress.
 4. Appendix
     1. FAQ
     2. License texts
+    3. Emacs Lisp
 
 ## About This Project
 
@@ -266,3 +267,18 @@ Main loop of *Lambda* reader do `lambda-reader/step` until the end of file, and 
 		(string= "l" (pathname-type dist)))
 	(lambdaconvert/markdown src dist))))
 ```
+
+## Appendix
+
+### Emacs Lisp
+
+    (require 'mmm-mode)
+    (setq mmm-global-mode 'maybe)
+    (set-face-background 'mmm-default-submode-face nil)
+    (mmm-add-mode-ext-class nil "\\.l.md?\\'" 'lambda-markdown)
+    (mmm-add-classes
+     '((lambda-markdown
+        :submode lisp-mode
+        :front "```lisp"
+        :back "```")))
+    (add-to-list 'auto-mode-alist '("\\.l.md?\\'" . markdown-mode))
