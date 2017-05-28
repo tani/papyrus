@@ -1,9 +1,10 @@
 
-    (in-package :cl-user)
-    (defpackage :lambda.README
-      (:use :cl :lambda :named-readtables))
-    (in-package :lambda.README)
-    (in-readtable :lambda)
+    (in-package #:cl-user)
+    (defpackage #:lambda
+      (:use :cl :lambda.readtable :named-readtables)
+      (:export #:lambda)
+    (in-package #:lambda)
+    (in-readtable #:lambda)
 
 # Lambda
 This project is a work in progress.
@@ -15,12 +16,11 @@ This project is a work in progress.
     2. Copyright
     3. License
     4. Precaution
-2. [Tutorial](./tutorial.md)
+2. Tutorial
     1. REPL
     2. ASDF
-    3. Command Line
-3. [Source Code](./lambda.l.md)
-4. [Appendix](./appendix.md)
+3. Reference
+4. Appendix(./appendix.md)
     1. FAQ
     3. Emacs Lisp
 
@@ -59,3 +59,129 @@ This is a newborn project. Please send me your feedback when you find a issue.
 
 - [Project home](https://github.com/ta2gch/lambda)
 
+## Tutorials
+
+In *Lambda*, you can write any texts but have to write a title (`#`) at the top
+of the document like a following and make the extension of file name being
+`.l.md` and write with Markdown especially CommonMark whose specification is in
+[commonmark.org](https://commonmark.org). And *Lambda* evaluate codeblocks
+between ` ```lisp ` and ` ``` ` and does'nt evaluate other codeblocks which has
+four spaces or ` ```sh ` and ` ``` `.
+
+        (in-package :cl-user)
+        (defpackage :lambda.Tutorial
+          (:use :cl :lambda :named-readtables))
+        (in-package :lambda.Tutorial)
+        (in-readtable :lambda)
+
+    # My First Document
+
+    This is my first document.
+    This will say "Hello, world!".
+
+    ```lisp
+    (defun hello ()
+      (princ "Hello, world!"))
+    ```
+
+if you try this tutorial, save as `hello.l.md` the document which is used in
+this section. Now, to treat your documents you have three ways, **REPL**,
+**ASDF** and **Command Line**. And these are quick tutorials for them. For more
+information, please see the **Source Code** section.
+
+### REPL
+
+a REPL is a good environment to try your documents of *Lamda*. We can load them
+and test the behaivor quickly and it is conveniense to use them with *SLIME*.
+
+#### Installation
+
+Sorry, *Lambda* is NOT available in QuickLisp. Currently, You can install
+*Lambda* with [Roswell](https://github.com/roswell/roswell).
+
+    $ ros install ta2gch/lambda
+
+Next you can load document like a following.
+
+    > (load #p"hello.l.md")
+    nil
+    > (hello)
+    Hello, World!
+
+### ASDF
+
+Let's write a small project whose tree of directories is a following.
+
+    tutorial.asd
+    src/
+      tutorial.l.md
+
+`src/tutorial.l.md` is that you wrote in **REPL** section, and `tutorial.asd`
+is this.
+
+    (in-package :cl-user)
+    (defpackage tutorial-asd
+      (:use :cl :asdf))
+    (in-package :tutorial-asd)
+    
+    (defsystem tutorial
+      :version "0.1"
+      :author "Your name"
+      :license "MIT"
+      :depends-on (:lambda :named-readtables)
+      :components ((:file #p"tutorial.l.md"))
+      :description "A Literate Programming Framework")
+
+Now, you have two files, `src/tutorial.l.md` and `tutorial.asd`, and be able to
+load this system as always like this.
+
+    > (load #p"tutorial.asd")
+    nil
+    > (tutorial:hello)
+    Hello, World!
+
+Off course, users who use your project need nothing to load.
+
+## Reference
+
+## `lambda`
+
+This is a readtable defined by `named-readtables`. You can use this with
+`named-readtable:in-readtable` like this document.
+
+        (in-package #:cl-user)
+        (defpackage #:sample
+          (:use :cl :named-readtables :lambda.readtable)
+          (:export #:sample-function))
+
+    # Sample
+
+    This is a sample code. Following function just say "Hello, world!";
+
+    ```lisp
+    (defun sample-function () (princ "Hello, world!"))
+    ```
+
+## Appendix
+
+### FAQ
+
+- Why doesn't *Lambda* have something like `<<foo>>=` ?
+  Because CommonLisp has already had the great flexible macro system.
+  You have to use it.
+
+### Emacs Lisp
+
+If you use emacs, there are `mmm-mode` which highlights the syntax of lisp
+codeblock of Markdown, but SLIME doesn't works well in `mmm-mode`.
+
+    (require 'mmm-mode)
+    (setq mmm-global-mode 'maybe)
+    (set-face-background 'mmm-default-submode-face nil)
+    (mmm-add-mode-ext-class nil "\\.l.md?\\'" 'lambda-markdown)
+    (mmm-add-classes
+     '((lambda-markdown
+        :submode lisp-mode
+        :front "```lisp"
+        :back "```")))
+    (add-to-list 'auto-mode-alist '("\\.l.md?\\'" . markdown-mode))
