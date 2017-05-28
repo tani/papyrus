@@ -197,7 +197,7 @@ Main algorithm of *Lambda* reader is taht `lambda-reader/step` add `line` into `
      ((equalp 0 (search "```lisp" ,line)) (setf ,codeblock t))
      ((equalp 0 (search "```" ,line)) (setf ,codeblock nil))
      ((funcall ,op codeblock)
-	  (setf ,buffer (format nil "~a~%~a" ,buffer ,line)))))
+      (setf ,buffer (format nil "~a~%~a" ,buffer ,line)))))
 ```
 
 Main loop of *Lambda* reader do `lambda-reader/step` until the end of file, and return the result that Common Lisp has eveluated `buffer`.
@@ -216,8 +216,7 @@ Main loop of *Lambda* reader do `lambda-reader/step` until the end of file, and 
 (defun lambda-reader (stream c1 c2)
   (declare (ignore c1 c2))
   (read-from-string
-   (format nil "(progn ~a)"
-		   (lambda-reader/main stream  #'identity))))
+   (format nil "(progn ~a)" (lambda-reader/main stream  #'identity))))
 ```
 
 #### Define `lambdaload`
@@ -250,22 +249,22 @@ Main loop of *Lambda* reader do `lambda-reader/step` until the end of file, and 
 (defun lambdaconvert/html (src dist)
   (with-open-file (in src)
     (with-open-file (out dist)
-	  (parse-string-and-print-to-stream
-	    (lambda-reader/main in #'not) out))))
+      (parse-string-and-print-to-stream
+        (lambda-reader/main in #'not) out))))
 ```
 
 ```lisp
 (defun lambdaconvert (src dist)
   (cond
    ((or (string= "md" (pathname-type dist))
-		(string= "markdown" (pathname-type dist)))
-	(lambdaconvert/markdown src dist))w
+        (string= "markdown" (pathname-type dist)))
+    (lambdaconvert/markdown src dist))w
    ((string= "html" (pathname-type dist))
-	(lambdaconvert/html src dist))
+    (lambdaconvert/html src dist))
    ((or (string= "lisp" (pathname-type dist))
-		(string= "lsp" (pathname-type dist))
-		(string= "l" (pathname-type dist)))
-	(lambdaconvert/markdown src dist))))
+        (string= "lsp" (pathname-type dist))
+        (string= "l" (pathname-type dist)))
+    (lambdaconvert/lisp src dist))))
 ```
 
 ## Appendix
