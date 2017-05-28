@@ -67,9 +67,10 @@ This is a newborn project. Please send me your feedback when you find a issue.
 ## Tutorials
 
 In *Lambda*, you can write any texts but have to write a title (`#`) at the top
-of the document like a following and make the extension of file name being
-`.l.md` or `.md`. To distinguish Markdown I recommend using `.l.md`.
-And write with Markdown especially CommonMark whose specification is in
+of the document like a following and make the extension of the file being
+`.l.md` or `.md`. To distinguish from non-executable Markdown I recommend using
+`.l.md` as the extension of the file. And you can write with Markdown
+especially CommonMark whose specification is in
 [commonmark.org](https://commonmark.org). And *Lambda* evaluate codeblocks
 between ` ```lisp ` and ` ``` ` and does'nt evaluate indented codeblocks
 and others *after* the title (`# `). The indented codeblock *before* the title
@@ -93,9 +94,9 @@ Please don't forget.
     ```
 
 if you try this tutorial, save as `tutorial.l.md` the document which is used in
-this section. Now, to treat your documents you have three ways, **REPL**,
-**ASDF** and **Command Line**. And these are quick tutorials for them. For more
-information, please see the **Source Code** section.
+this section. Now, to treat your documents you have two ways, **REPL** and
+**ASDF**. And these are quick tutorials for them. For more information, please
+see the **Reference** section.
 
 ### REPL
 
