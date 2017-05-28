@@ -168,8 +168,9 @@ This is a readtable defined by `named-readtables`. You can use this with
 
         (in-package #:cl-user)
         (defpackage #:sample
-          (:use :cl :named-readtables :lambda.readtable)
+          (:use :cl :named-readtables :lambda)
           (:export #:sample-function))
+        (in-package :lambda)
 
     # Sample
 
