@@ -9,4 +9,4 @@
   :license "GPLv3"
   :depends-on (:named-readtables)
   :components ((:file "lambda"))
-  :description "A Literate Programming Framework")
+  :description "A Literate Programming Tool")
