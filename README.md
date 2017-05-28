@@ -56,7 +56,7 @@ Copyright (c) 2017 TANIGUCHI Masaya All Rights Reserved
 
 ### License
 
-GPLv3. See the appendix.
+GPLv3. See the [license texts](./LICENSE).
 
 ### Precaution
 
@@ -68,12 +68,13 @@ This is a newborn project. Please send me your feedback when you find a issue.
 
 In *Lambda*, you can write any texts but have to write a title (`#`) at the top
 of the document like a following and make the extension of file name being
-`.l.md` and write with Markdown especially CommonMark whose specification is in
+`.l.md` or `.md`. To distinguish Markdown I recommend using `.l.md`.
+And write with Markdown especially CommonMark whose specification is in
 [commonmark.org](https://commonmark.org). And *Lambda* evaluate codeblocks
-between ` ```lisp ` and ` ``` ` and does'nt evaluate other codeblocks which has
-four spaces *after* the title (`# `), or ` ```sh ` and ` ``` `.
-The four spaces *before* the title (`# `) is important, this is a codeblock
-and is a definition of package. Please don't forget.
+between ` ```lisp ` and ` ``` ` and does'nt evaluate indented codeblocks
+and others *after* the title (`# `). The indented codeblock *before* the title
+(`# `) is important, this is a codeblock and is a definition of package.
+Please don't forget.
 
         (in-package :cl-user)
         (defpackage :lambda.Tutorial
@@ -91,7 +92,7 @@ and is a definition of package. Please don't forget.
       (princ "Hello, world!"))
     ```
 
-if you try this tutorial, save as `hello.l.md` the document which is used in
+if you try this tutorial, save as `tutorial.l.md` the document which is used in
 this section. Now, to treat your documents you have three ways, **REPL**,
 **ASDF** and **Command Line**. And these are quick tutorials for them. For more
 information, please see the **Source Code** section.
@@ -110,7 +111,7 @@ Sorry, *Lambda* is NOT available in QuickLisp. Currently, You can install
 
 Next you can load document like a following.
 
-    > (load #p"hello.l.md")
+    > (load #p"tutorial.l.md")
     nil
     > (hello)
     Hello, World!
