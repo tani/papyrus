@@ -6,7 +6,7 @@
 (defsystem lambda
   :version "0.1"
   :author "TANIGUCHI Masaya"
-  :license "GPLv3"
+  :license "MIT"
   :depends-on (:named-readtables)
   :components ((:file "lambda"))
   :description "A Literate Programming Tool")
