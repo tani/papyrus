@@ -1,10 +1,10 @@
 (in-package #:cl-user)
-(defpackage #:lambda
+(defpackage #:papyrus
   (:use :cl :named-readtables)
-  (:export #:lambda))
-(in-package #:lambda)
+  (:export #:papyrus))
+(in-package #:papyrus)
 
-(defun lambda-reader (s a b)
+(defun papyrus-reader (s a b)
   (declare (ignore a b))
   (do ((line (read-line s nil nil) (read-line s nil nil))
        (buffer "")
@@ -14,6 +14,6 @@
       ((equalp 0 (search "```" line)) (setf codeblock nil))
       (codeblock (setf buffer (format nil "~a~%~a" buffer line))))))
 
-(defreadtable :lambda
+(defreadtable :papyrus
   (:merge :standard)
-  (:dispatch-macro-char #\# #\Space #'lambda-reader))
+  (:dispatch-macro-char #\# #\Space #'papyrus-reader))
