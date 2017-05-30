@@ -1,11 +1,11 @@
 
     (in-package #:cl-user)
-    (defpackage #:lambda.README
-      (:use :cl :lambda :named-readtables))
-    (in-package #:lambda.README)
-    (in-readtable :lambda)
+    (defpackage #:papyrus.README
+      (:use :cl :papyrus :named-readtables))
+    (in-package #:papyrus.README)
+    (in-readtable :papyrus)
 
-# Lambda
+# Papyrus
 A literate programming tool
 
 ## Table of Contents
@@ -28,8 +28,8 @@ A literate programming tool
 
 ### Philosophy
 
-*Lambda* is the name of a programming style as well as the name of a tool 
-with which to implement it. The author of *Lambda* developed it to do 
+*Papyrus* is the name of a programming style as well as the name of a tool 
+with which to implement it. The author of *papyrus* developed it to do 
 literate programming in LISP better than WEB, developed by Donald Knuth. 
 WEB and it's derived softwares are used in various programming languages. 
 They require developers compiling with them to obtain the source code.
@@ -44,11 +44,11 @@ source code when the system reads it.
 
 *Lambda* makes your markdown executable with the reader macro of Common Lisp.
 For example, the author wrote this document with *Lambda*. You can execute it 
-by running `ros run -l lambda.asd -e '(require :lambda)' -l README.md -q`.
+by running `ros run -l papyrus.asd -e '(require :papyrus)' -l README.md -q`.
 How about this? Let's make your project more beautiful and useful!
 
 ```lisp
-(princ "Hello, Lambda!")
+(princ "Hello, Papyrus!")
 ```
 
 ### Copyright
@@ -63,26 +63,25 @@ MIT. See the [license texts](./LICENSE).
 
 This is a new project. Please send me your feedback if you find any issues.
 
-- [Project home](https://github.com/ta2gch/lambda)
+- [Project home](https://github.com/ta2gch/papyrus)
 
 ## Tutorials
 
 In *Lambda*, you can write any text but you have to write a title (`# `) at 
 the top of the document, like the following, and make the file extension
-`.l.md` or `.md`. In order to make it distinguishable from non-executable 
-Markdown, I recommend using `.l.md`. Also, you can write with Markdown, 
+`.md`. Also, you can write with Markdown, 
 especially CommonMark whose specification can be found at 
-[commonmark.org](https://commonmark.org). *Lambda* only evaluates codeblocks
+[commonmark.org](https://commonmark.org). *Papyrus* only evaluates codeblocks
 *after* the title (`# `) that are enclosed by ` ```lisp ` and ` ``` `. The 
 indented codeblock *before* the title (`# `) is important, as this codeblock 
 specifies the required packages. Please do not forget it.
 
         (in-package :cl-user)
         (defpackage :tutorial
-          (:use :cl :lambda :named-readtables)
+          (:use :cl :papyrus :named-readtables)
           (:export :hello)
         (in-package :tutorial)
-        (in-readtable :lambda)
+        (in-readtable :papyrus)
 
     # My First Document
 
@@ -94,7 +93,7 @@ specifies the required packages. Please do not forget it.
       (princ "Hello, world!"))
     ```
 
-If you try this tutorial, save it as `tutorial.l.md`, as this is the filename
+If you try this tutorial, save it as `tutorial.md`, as this is the filename
 used in this section. Now, there are two ways to generate the document, 
 **REPL** and **ASDF**. The following are quick tutorials for each. For more 
 information, please see the **Reference** section.
@@ -107,16 +106,16 @@ with *SLIME*.
 
 #### Installation
 
-Unfortunately, *Lambda* is NOT available in QuickLisp. Currently, You can 
+Unfortunately, *Papyrus* is NOT available in QuickLisp. Currently, You can 
 install *Lambda* with [Roswell](https://github.com/roswell/roswell).
 
-    $ ros install ta2gch/lambda
+    $ ros install ta2gch/papyrus
 
 Next you can load document as follows:
 
-    > (require :lambda)
+    > (require :papyrus)
     nil
-    > (load #p"tutorial.l.md")
+    > (load #p"tutorial.md")
     nil
     > (tutorial:hello)
     Hello, World!
@@ -126,9 +125,9 @@ Next you can load document as follows:
 Let's write a small project whose files are the following.
 
     tutorial.asd
-    tutorial.l.md
+    tutorial.md
 
-`src/tutorial.l.md` is the file written in the **REPL** section, and 
+`tutorial.md` is the file written in the **REPL** section, and 
 `tutorial.asd` is this:
 
     (in-package :cl-user)
@@ -136,18 +135,18 @@ Let's write a small project whose files are the following.
       (:use :cl :asdf))
     (in-package :tutorial-asd)
     
-    (defclass lmd (cl-source-file)
+    (defclass papyrus (cl-source-file)
       ((type :initform "md")))
     
     (defsystem tutorial
       :version "0.1"
       :author "Your name"
       :license "MIT"
-      :depends-on (:lambda :named-readtables)
-      :components ((:lmd "tutorial.l"))
+      :depends-on (:papyrus :named-readtables)
+      :components ((:papyrus "tutorial"))
       :description "A Literate Programming Framework")
 
-Now that you have both files, `src/tutorial.l.md` and `tutorial.asd`, 
+Now that you have both files, `tutorial.md` and `tutorial.asd`, 
 you will be able to load this system like this.
 
     > (load #p"tutorial.asd")
@@ -161,7 +160,7 @@ Of course, users of your project won't need to load anything else.
 
 ## Reference
 
-## `lambda`
+## `papyrus`
 
 This is a readtable defined by `named-readtables`. You can use this with
 `named-readtable:in-readtable` like this document.
@@ -170,8 +169,8 @@ This is a readtable defined by `named-readtables`. You can use this with
         (defpackage #:sample
           (:use :cl :named-readtables :lambda)
           (:export #:sample-function))
-        (in-package :lambda)
-        (in-readtable :lambda)
+        (in-package :papyrus)
+        (in-readtable :papyrus)
 
     # Sample
 
@@ -185,7 +184,7 @@ This is a readtable defined by `named-readtables`. You can use this with
 
 ### FAQ
 
-- Why doesn't *Lambda* have something like `<<foo>>=` ?
+- Why doesn't *papyrus* have something like `<<foo>>=` ?
   Because CommonLisp already has the great, flexible macro system.
   You have to use it.
 
@@ -197,10 +196,9 @@ codeblocks in Markdown, but SLIME doesn't works well in `mmm-mode`.
     (require 'mmm-mode)
     (setq mmm-global-mode 'maybe)
     (set-face-background 'mmm-default-submode-face nil)
-    (mmm-add-mode-ext-class nil "\\.l.md?\\'" 'lambda-markdown)
+    (mmm-add-mode-ext-class nil "\\.l.md?\\'" 'lisp-markdown)
     (mmm-add-classes
-     '((lambda-markdown
+     '((lisp-markdown
         :submode lisp-mode
         :front "```lisp"
         :back "```")))
-    (add-to-list 'auto-mode-alist '("\\.l.md?\\'" . markdown-mode))
