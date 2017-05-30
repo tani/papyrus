@@ -20,7 +20,7 @@ A literate programming tool
     2. ASDF
 3. Reference
     1. Lamdba
-4. Appendix(./appendix.md)
+4. Appendix
     1. FAQ
     3. Emacs Lisp
 
