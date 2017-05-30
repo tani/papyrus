@@ -169,7 +169,7 @@ This is a readtable defined by `named-readtables`. You can use this with
         (defpackage #:sample
           (:use :cl :named-readtables :lambda)
           (:export #:sample-function))
-        (in-package :papyrus)
+        (in-package :sample)
         (in-readtable :papyrus)
 
     # Sample
@@ -196,7 +196,7 @@ codeblocks in Markdown, but SLIME doesn't works well in `mmm-mode`.
     (require 'mmm-mode)
     (setq mmm-global-mode 'maybe)
     (set-face-background 'mmm-default-submode-face nil)
-    (mmm-add-mode-ext-class nil "\\.l.md?\\'" 'lisp-markdown)
+    (mmm-add-mode-ext-class nil "\\.md?\\'" 'lisp-markdown)
     (mmm-add-classes
      '((lisp-markdown
         :submode lisp-mode
