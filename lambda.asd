@@ -3,7 +3,7 @@
   (:use :cl :asdf))
 (in-package :papyrus-asd)
 
-(defsystem lambda
+(defsystem papyrus
   :version "0.1"
   :author "TANIGUCHI Masaya"
   :license "MIT"
