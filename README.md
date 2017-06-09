@@ -106,8 +106,12 @@ with *SLIME*.
 
 #### Installation
 
-Unfortunately, *Papyrus* is NOT available in QuickLisp. Currently, You can 
-install *Lambda* with [Roswell](https://github.com/roswell/roswell).
+*Papyrus* is　available in QuickLisp.
+To install Just type,
+
+    > (ql:quickload :papyrus)
+
+Or, you can install *Lambda* with [Roswell](https://github.com/roswell/roswell).
 
     $ ros install ta2gch/papyrus
 
