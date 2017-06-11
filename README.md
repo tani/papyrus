@@ -42,8 +42,8 @@ source code when the system reads it.
   <img src="img/lambda.png" width="250px"/>
 </div>
 
-*Lambda* makes your markdown executable with the reader macro of Common Lisp.
-For example, the author wrote this document with *Lambda*. You can execute it 
+*Papyrus* makes your markdown executable with the reader macro of Common Lisp.
+For example, the author wrote this document with *Papyrus*. You can execute it
 by running `ros run -l papyrus.asd -e '(require :papyrus)' -l README.md -q`.
 How about this? Let's make your project more beautiful and useful!
 
@@ -67,7 +67,7 @@ This is a new project. Please send me your feedback if you find any issues.
 
 ## Tutorials
 
-In *Lambda*, you can write any text but you have to write a title (`# `) at 
+In *Papyrus*, you can write any text but you have to write a title (`# `) at
 the top of the document, like the following, and make the file extension
 `.md`. Also, you can write with Markdown, 
 especially CommonMark whose specification can be found at 
@@ -111,7 +111,7 @@ To install Just type,
 
     > (ql:quickload :papyrus)
 
-Or, you can install *Lambda* with [Roswell](https://github.com/roswell/roswell).
+Or, you can install *Papyrus* with [Roswell](https://github.com/roswell/roswell).
 
     $ ros install ta2gch/papyrus
 
@@ -171,7 +171,7 @@ This is a readtable defined by `named-readtables`. You can use this with
 
         (in-package #:cl-user)
         (defpackage #:sample
-          (:use :cl :named-readtables :lambda)
+          (:use :cl :named-readtables :papyrus)
           (:export #:sample-function))
         (in-package :sample)
         (in-readtable :papyrus)
