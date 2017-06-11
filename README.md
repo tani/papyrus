@@ -39,7 +39,7 @@ source code when the system reads it.
 
 <div style="display:flex;height:200px;justify-content:center;">
   <img src="img/web.png" width="250px"/>
-  <img src="img/lambda.png" width="250px"/>
+  <img src="img/papyrus.png" width="250px"/>
 </div>
 
 *Papyrus* makes your markdown executable with the reader macro of Common Lisp.
