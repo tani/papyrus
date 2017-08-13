@@ -100,13 +100,13 @@ information, please see the **Reference** section.
 
 ### REPL
 
-A REPL is a good environment to experiment with your *Lamda* documents. We 
+A REPL is a good environment to experiment with your *Papyrus* documents. We 
 can load them and test the behaivor quickly and it is convenient to use them
 with *SLIME*.
 
 #### Installation
 
-*Papyrus* is　available in QuickLisp.
+*Papyrus* is available in QuickLisp.
 To install Just type,
 
     > (ql:quickload :papyrus)
