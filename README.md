@@ -53,7 +53,7 @@ How about this? Let's make your project more beautiful and useful!
 
 ### Copyright
 
-Copyright (c) 2017 TANIGUCHI Masaya All Rights Reserved
+Copyright (c) 2017 asciian All Rights Reserved
 
 ### License
 
@@ -63,7 +63,7 @@ MIT. See the [license texts](./LICENSE).
 
 This is a new project. Please send me your feedback if you find any issues.
 
-- [Project home](https://github.com/ta2gch/papyrus)
+- [Project home](https://github.com/asciian/papyrus)
 
 ## Tutorials
 
@@ -113,7 +113,7 @@ To install Just type,
 
 Or, you can install *Papyrus* with [Roswell](https://github.com/roswell/roswell).
 
-    $ ros install ta2gch/papyrus
+    $ ros install asciian/papyrus
 
 Next you can load document as follows:
 

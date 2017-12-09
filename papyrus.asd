@@ -5,7 +5,7 @@
 
 (defsystem papyrus
   :version "0.1"
-  :author "TANIGUCHI Masaya"
+  :author "asciian"
   :license "MIT"
   :depends-on (:named-readtables)
   :components ((:file "papyrus"))
