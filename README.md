@@ -186,13 +186,16 @@ This is a readtable defined by `named-readtables`. You can use this with
 
 ## Appendix
 
-### FAQ
-
-- Why doesn't *papyrus* have something like `<<foo>>=` ?
-  Because CommonLisp already has the great, flexible macro system.
-  You have to use it.
-
 ### Emacs Lisp
+
+### Recommended way
+
+Try to use [polymode](https://github.com/vspinu/polymode)
+
+    (require 'poly-markdown)
+    (add-to-list 'auto-mode-alist '("\\.md" . poly-markdown-mode))
+
+### Old way
 
 If you use emacs, there is `mmm-mode` which highlights the syntax of lisp
 codeblocks in Markdown, but SLIME doesn't works well in `mmm-mode`.
