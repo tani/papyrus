@@ -19,7 +19,7 @@ A literate programming tool
     1. REPL
     2. ASDF
 3. Reference
-    1. Lamdba
+    1. Papyrus
 4. Appendix
     1. FAQ
     3. Emacs Lisp
