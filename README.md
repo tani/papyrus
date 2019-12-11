@@ -63,7 +63,7 @@ MIT. See the [license texts](./LICENSE).
 
 This is a new project. Please send me your feedback if you find any issues.
 
-- [Project home](https://github.com/asciian/papyrus)
+- [Project home](https://github.com/fgborges/papyrus)
 
 ## Tutorials
 
