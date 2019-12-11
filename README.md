@@ -53,7 +53,7 @@ How about this? Let's make your project more beautiful and useful!
 
 ### Copyright
 
-Copyright (c) 2017 asciian All Rights Reserved
+Copyright (c) 2019 Fernado Garcia Borges All Rights Reserved
 
 ### License
 
