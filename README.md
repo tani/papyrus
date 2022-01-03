@@ -63,7 +63,7 @@ MIT. See the [license texts](./LICENSE).
 
 This is a new project. Please send me your feedback if you find any issues.
 
-- [Project home](https://github.com/fgborges/papyrus)
+- [Project home](https://github.com/tani/papyrus)
 
 ## Tutorials
 
@@ -113,7 +113,7 @@ To install Just type,
 
 Or, you can install *Papyrus* with [Roswell](https://github.com/roswell/roswell).
 
-    $ ros install asciian/papyrus
+    $ ros install taj9/papyrus
 
 Next you can load document as follows:
 
