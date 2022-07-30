@@ -53,7 +53,7 @@ How about this? Let's make your project more beautiful and useful!
 
 ### Copyright
 
-Copyright (c) 2019 Fernado Garcia Borges All Rights Reserved
+Copyright (c) 2019 -- 2022 TANIGUCHI Masaya All Rights Reserved
 
 ### License
 
@@ -113,7 +113,7 @@ To install Just type,
 
 Or, you can install *Papyrus* with [Roswell](https://github.com/roswell/roswell).
 
-    $ ros install taj9/papyrus
+    $ ros install tani/papyrus
 
 Next you can load document as follows:
 

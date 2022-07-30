@@ -4,7 +4,7 @@
 (in-package :papyrus-asd)
 
 (defsystem papyrus
-  :version "0.1"
+  :version "0.1.1"
   :author "TANIGUCHI Masaya"
   :license "MIT"
   :depends-on (:named-readtables)
