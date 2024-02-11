@@ -8,22 +8,6 @@
 # Papyrus
 A literate programming tool
 
-## Table of Contents
-
-1. About This Project
-    1. Philosophy
-    2. Copyright
-    3. License
-    4. Precautions
-2. Tutorials
-    1. REPL
-    2. ASDF
-3. Reference
-    1. Papyrus
-4. Appendix
-    1. FAQ
-    3. Emacs Lisp
-
 ## About This Project
 
 ### Philosophy
@@ -37,10 +21,17 @@ It is required in order to do literate programming in C and Pascal, but isn't
 in Common Lisp because Common Lisp has the reader macro which changes the
 source code when the system reads it.
 
-<div style="display:flex;height:200px;justify-content:center;">
-  <img src="img/web.png" width="250px"/>
-  <img src="img/papyrus.png" width="250px"/>
-</div>
+```mermaid
+flowchart TB
+  subgraph Knuth's system
+  WEB -- CTANGLE --> Pascal
+  WEB -- CWEAVE --> TeX
+  end
+  subgraph Our system
+  Papyrus -- reader macro --> CommonLisp
+  Papyrus --- Markdown
+  end
+```
 
 *Papyrus* makes your markdown executable with the reader macro of Common Lisp.
 For example, the author wrote this document with *Papyrus*. You can execute it
