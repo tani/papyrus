@@ -6,7 +6,7 @@
     (in-readtable :papyrus)
 
 # Papyrus
-A literate programming tool
+A literate programming tool for	Common Lisp.
 
 ## About This Project
 
@@ -72,7 +72,7 @@ specifies the required packages. Please do not forget it.
           (:use :cl :papyrus :named-readtables)
           (:export :hello)
         (in-package :tutorial)
-        (in-readtable :papyrus)
+        (in-readtable :papyrus-markdown)
 
     # My First Document
 
@@ -130,15 +130,18 @@ Let's write a small project whose files are the following.
       (:use :cl :asdf))
     (in-package :tutorial-asd)
     
-    (defclass papyrus (cl-source-file)
+    (defclass markdown (cl-source-file)
       ((type :initform "md")))
+      
+    (defclass org (cl-source-file)
+      ((type :initform "org")))
     
     (defsystem tutorial
       :version "0.1"
       :author "Your name"
       :license "MIT"
       :depends-on (:papyrus :named-readtables)
-      :components ((:papyrus "tutorial"))
+      :components ((:markdown "tutorial"))
       :description "A Literate Programming Framework")
 
 Now that you have both files, `tutorial.md` and `tutorial.asd`, 
@@ -155,7 +158,7 @@ Of course, users of your project won't need to load anything else.
 
 ## Reference
 
-## `papyrus`
+### `papyrus` or `papyrus-markdown`
 
 This is a readtable defined by `named-readtables`. You can use this with
 `named-readtable:in-readtable` like this document.
@@ -165,7 +168,7 @@ This is a readtable defined by `named-readtables`. You can use this with
           (:use :cl :named-readtables :papyrus)
           (:export #:sample-function))
         (in-package :sample)
-        (in-readtable :papyrus)
+        (in-readtable :papyrus-markdown)
 
     # Sample
 
@@ -174,6 +177,25 @@ This is a readtable defined by `named-readtables`. You can use this with
     ```lisp
     (defun sample-function () (princ "Hello, world!"))
     ```
+
+### `papyrus-org`
+
+This is a readtable defined by `named-readtables` for org-mode.
+You can use this with `named-readtable:in-readtable` like this document.
+
+    #+CL:* * (in-package #:cl-user)
+    #+CL:* * (defpackage #:sample
+    #+CL:* *   (:use :cl :named-readtables :papyrus)
+    #+CL:* *   (:export #:sample-function))
+    #+CL:* * (in-package :sample)
+    #+CL:* * (in-readtable :papyrus-org)
+    # -- Papyrus --
+
+    This is a sample code. The following function just says "Hello, world!"
+
+    #+BEGIN_SRC lisp :tangle yes
+    (defun sample-function () (princ "Hello, world!"))
+    #+END_SRC
 
 ## Appendix
 
