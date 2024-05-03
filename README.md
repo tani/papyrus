@@ -182,6 +182,7 @@ This is a readtable defined by `named-readtables`. You can use this with
 
 This is a readtable defined by `named-readtables` for org-mode.
 You can use this with `named-readtable:in-readtable` like this document.
+Unlike Markdown, any `#+CL:` tags are ignored when rendering the content to HTML.
 
     #+CL:* * (in-package #:cl-user)
     #+CL:* * (defpackage #:sample
