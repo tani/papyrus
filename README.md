@@ -12,12 +12,12 @@ A literate programming tool for	Common Lisp.
 
 ### Philosophy
 
-*Papyrus* is the name of a programming style as well as the name of a tool 
-with which to implement it. The author of *papyrus* developed it to do 
-literate programming in LISP better than WEB, developed by Donald Knuth. 
-WEB and it's derived softwares are used in various programming languages. 
+*Papyrus* is the name of a programming style as well as the name of a tool
+with which to implement it. The author of *papyrus* developed it to do
+literate programming in LISP better than WEB, developed by Donald Knuth.
+WEB and it's derived softwares are used in various programming languages.
 They require developers compiling with them to obtain the source code.
-It is required in order to do literate programming in C and Pascal, but isn't 
+It is required in order to do literate programming in C and Pascal, but isn't
 in Common Lisp because Common Lisp has the reader macro which changes the
 source code when the system reads it.
 
@@ -44,7 +44,7 @@ How about this? Let's make your project more beautiful and useful!
 
 ### Copyright
 
-Copyright (c) 2019 -- 2022 TANIGUCHI Masaya All Rights Reserved
+Copyright (c) 2019 -- 2024 TANIGUCHI Masaya All Rights Reserved
 
 ### License
 
@@ -60,11 +60,11 @@ This is a new project. Please send me your feedback if you find any issues.
 
 In *Papyrus*, you can write any text but you have to write a title (`# `) at
 the top of the document, like the following, and make the file extension
-`.md`. Also, you can write with Markdown, 
-especially CommonMark whose specification can be found at 
+`.md`. Also, you can write with Markdown,
+especially CommonMark whose specification can be found at
 [commonmark.org](https://commonmark.org). *Papyrus* only evaluates codeblocks
-*after* the title (`# `) that are enclosed by ` ```lisp ` and ` ``` `. The 
-indented codeblock *before* the title (`# `) is important, as this codeblock 
+*after* the title (`# `) that are enclosed by ` ```lisp ` and ` ``` `. The
+indented codeblock *before* the title (`# `) is important, as this codeblock
 specifies the required packages. Please do not forget it.
 
         (in-package :cl-user)
@@ -85,13 +85,13 @@ specifies the required packages. Please do not forget it.
     ```
 
 If you try this tutorial, save it as `tutorial.md`, as this is the filename
-used in this section. Now, there are two ways to generate the document, 
-**REPL** and **ASDF**. The following are quick tutorials for each. For more 
+used in this section. Now, there are two ways to generate the document,
+**REPL** and **ASDF**. The following are quick tutorials for each. For more
 information, please see the **Reference** section.
 
 ### REPL
 
-A REPL is a good environment to experiment with your *Papyrus* documents. We 
+A REPL is a good environment to experiment with your *Papyrus* documents. We
 can load them and test the behaivor quickly and it is convenient to use them
 with *SLIME*.
 
@@ -122,7 +122,7 @@ Let's write a small project whose files are the following.
     tutorial.asd
     tutorial.md
 
-`tutorial.md` is the file written in the **REPL** section, and 
+`tutorial.md` is the file written in the **REPL** section, and
 `tutorial.asd` is this:
 
     (in-package :cl-user)
@@ -132,7 +132,7 @@ Let's write a small project whose files are the following.
     
     (defclass markdown (cl-source-file)
       ((type :initform "md")))
-      
+    
     (defclass org (cl-source-file)
       ((type :initform "org")))
     
@@ -144,7 +144,7 @@ Let's write a small project whose files are the following.
       :components ((:markdown "tutorial"))
       :description "A Literate Programming Framework")
 
-Now that you have both files, `tutorial.md` and `tutorial.asd`, 
+Now that you have both files, `tutorial.md` and `tutorial.asd`,
 you will be able to load this system like this.
 
     > (load #p"tutorial.asd")

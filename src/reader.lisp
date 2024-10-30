@@ -1,14 +1,11 @@
-(in-package :cl-user)
-(defpackage :papyrus-reader
-  (:use :cl)
-  (:export papyrus-markdown-reader papyrus-org-reader))
-(in-package :papyrus-reader)
-
+(defpackage #:papyrus/src/reader
+  (:use #:cl)
+  (:export #:papyrus-markdown-reader #:papyrus-org-reader))
+(in-package #:papyrus/src/reader)
 
 (defun <? (&rest args)
   (flet ((nil-to-inf (x) (or x most-positive-fixnum)))
     (apply #'< (mapcar #'nil-to-inf args))))
-
 
 (defun papyrus-org-reader (s a b)
   (declare (ignore a b))
@@ -20,7 +17,6 @@
            (setq codeblock t))
           ((<? (search "#+END_SRC" line) 1) (setq codeblock nil))
           (codeblock (push line buffer)))))
-
 
 (defun papyrus-markdown-reader (s a b)
   (declare (ignore a b))

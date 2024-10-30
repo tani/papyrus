@@ -1,5 +1,6 @@
-(load #p"reader.lisp")
-(in-package :papyrus-reader)
+(defpackage #:papyrus/test/reader
+  (:use #:cl #:parachute #:papyrus/src/reader))
+(in-package #:papyrus/test/reader)
 
 (defvar md "
 
@@ -34,17 +35,15 @@ This is a code block
 
 ")
 
-(format t "Testing markdown reader~%")
-(let ((stream (make-string-input-stream md)))
-  (assert
-    (equalp
+(define-test markdown-reader-test
+  (let ((stream (make-string-input-stream md)))
+    (is equalp
      '(progn
        (defun hello-world-1 ()
          (print "Hello, World!"))
        (defun hello-world-2 ()
          (print "Hello, World!")))
-       (papyrus-markdown-reader stream nil nil))))
-(format t "Markdown reader test passed~%")
+     (papyrus-markdown-reader stream nil nil))))
 
 (defvar org "
 
@@ -77,14 +76,12 @@ This is a code block
 
 ")
 
-(format t "Testing org reader~%")
-(let ((stream (make-string-input-stream org)))
-  (assert
-    (equalp
+(define-test org-reader-test
+  (let ((stream (make-string-input-stream org)))
+    (is equalp
      '(progn
        (defun hello-world-1 ()
          (print "Hello, World!"))
        (defun hello-world-2 ()
          (print "Hello, World!")))
      (papyrus-org-reader stream nil nil))))
-(format t "Org reader test passed~%")
