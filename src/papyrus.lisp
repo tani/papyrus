@@ -18,4 +18,4 @@
 
 (defreadtable #:papyrus-pod
     (:merge :standard)
-  (:dispatch-macro-char #\# #\Space #'pod-reader))
+  (:macro-char #\= #'pod-reader))

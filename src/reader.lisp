@@ -28,8 +28,8 @@
           ((<? (search "```" line) 1) (setq codeblock nil))
           (codeblock (push line buffer)))))
 
-(defun pod-reader (s a b)
-  (declare (ignore a b))
+(defun pod-reader (s a)
+  (declare (ignore a))
   (do ((line (read-line s nil nil) (read-line s nil nil))
        (buffer nil)
        (codeblock nil))

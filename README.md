@@ -203,8 +203,6 @@ You can use this with `named-readtable:in-readtable` like this document.
     (in-package #:sample)
     (in-readtable :papyrus-pod)
 
-    # -- Papyrus --
-
     =pod
 
     This is a sample code. The following function just says "Hello, world!"
