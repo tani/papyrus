@@ -1,8 +1,7 @@
 
-    (in-package #:cl-user)
-    (defpackage #:papyrus.README
-      (:use :cl :papyrus :named-readtables))
-    (in-package #:papyrus.README)
+    (defpackage #:papyrus/README
+      (:use #:cl #:papyrus #:named-readtables))
+    (in-package #:papyrus/README)
     (in-readtable :papyrus)
 
 # Papyrus
@@ -67,11 +66,10 @@ especially CommonMark whose specification can be found at
 indented codeblock *before* the title (`# `) is important, as this codeblock
 specifies the required packages. Please do not forget it.
 
-        (in-package :cl-user)
-        (defpackage :tutorial
-          (:use :cl :papyrus :named-readtables)
-          (:export :hello)
-        (in-package :tutorial)
+        (defpackage #:tutorial
+          (:use #:cl #:papyrus #:named-readtables)
+          (:export #:hello)
+        (in-package #:tutorial)
         (in-readtable :papyrus-markdown)
 
     # My First Document
@@ -125,17 +123,15 @@ Let's write a small project whose files are the following.
 `tutorial.md` is the file written in the **REPL** section, and
 `tutorial.asd` is this:
 
-    (in-package :cl-user)
-    (defpackage tutorial-asd
-      (:use :cl :asdf))
-    (in-package :tutorial-asd)
-    
     (defclass markdown (cl-source-file)
       ((type :initform "md")))
-    
+
     (defclass org (cl-source-file)
       ((type :initform "org")))
-    
+
+    (defclass pod (cl-source-file)
+      ((type :initform "pod")))
+
     (defsystem tutorial
       :version "0.1"
       :author "Your name"
@@ -163,11 +159,10 @@ Of course, users of your project won't need to load anything else.
 This is a readtable defined by `named-readtables`. You can use this with
 `named-readtable:in-readtable` like this document.
 
-        (in-package #:cl-user)
         (defpackage #:sample
-          (:use :cl :named-readtables :papyrus)
+          (:use #:cl #:named-readtables #:papyrus)
           (:export #:sample-function))
-        (in-package :sample)
+        (in-package #:sample)
         (in-readtable :papyrus-markdown)
 
     # Sample
@@ -184,11 +179,10 @@ This is a readtable defined by `named-readtables` for org-mode.
 You can use this with `named-readtable:in-readtable` like this document.
 Unlike Markdown, any `#+CL:` tags are ignored when rendering the content to HTML.
 
-    #+CL:* * (in-package #:cl-user)
     #+CL:* * (defpackage #:sample
-    #+CL:* *   (:use :cl :named-readtables :papyrus)
+    #+CL:* *   (:use #:cl #:named-readtables #:papyrus)
     #+CL:* *   (:export #:sample-function))
-    #+CL:* * (in-package :sample)
+    #+CL:* * (in-package #:sample)
     #+CL:* * (in-readtable :papyrus-org)
     # -- Papyrus --
 
@@ -197,6 +191,27 @@ Unlike Markdown, any `#+CL:` tags are ignored when rendering the content to HTML
     #+BEGIN_SRC lisp :tangle yes
     (defun sample-function () (princ "Hello, world!"))
     #+END_SRC
+
+### `papyrus-pod`
+
+This is a readtable defined by `named-readtables` for POD.
+You can use this with `named-readtable:in-readtable` like this document.
+
+    (defpackage #:sample
+      (:use #:cl #:named-readtables #:papyrus)
+      (:export #:sample-function))
+    (in-package #:sample)
+    (in-readtable :papyrus-pod)
+
+    # -- Papyrus --
+
+    =pod
+
+    This is a sample code. The following function just says "Hello, world!"
+
+    =cut
+
+    (defun sample-function () (princ "Hello, world!"))
 
 ## Appendix
 

@@ -43,7 +43,7 @@ This is a code block
          (print "Hello, World!"))
        (defun hello-world-2 ()
          (print "Hello, World!")))
-     (papyrus-markdown-reader stream nil nil))))
+     (markdown-reader stream nil nil))))
 
 (defvar org "
 
@@ -84,4 +84,55 @@ This is a code block
          (print "Hello, World!"))
        (defun hello-world-2 ()
          (print "Hello, World!")))
-     (papyrus-org-reader stream nil nil))))
+     (org-reader stream nil nil))))
+
+(defvar pod "
+=pod
+
+=head1 This is an org file
+
+This is a paragraph.
+
+This is another paragraph.
+
+=over
+
+=item This is a list item
+
+=item This is another list item
+
+=back
+
+This is a inline code block: =echo 'hello world'=
+
+This is a code block:
+
+=cut
+
+(defun hello-world-1 ()
+  (print \"Hello, World!\"))
+
+=pod
+
+=begin text
+
+This is a code block
+
+=end text
+
+=cut
+
+(defun hello-world-2 ()
+  (print \"Hello, World!\"))
+
+")
+
+(define-test pod-reader-test
+  (let ((stream (make-string-input-stream pod)))
+    (is equalp
+     '(progn
+       (defun hello-world-1 ()
+         (print "Hello, World!"))
+       (defun hello-world-2 ()
+         (print "Hello, World!")))
+     (pod-reader stream nil nil))))
