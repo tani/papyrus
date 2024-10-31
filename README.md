@@ -183,7 +183,7 @@ Unlike Markdown, any `#+CL:` tags are ignored when rendering the content to HTML
     #+CL:* *   (:use #:cl)
     #+CL:* *   (:export #:sample-function))
     #+CL:* * (in-package #:sample)
-    #+CL:* * (named-readtables:in-readtable papyrus:md-syntax)
+    #+CL:* * (named-readtables:in-readtable papyrus:org-syntax)
 
     This is a sample code. The following function just says "Hello, world!"
 
@@ -201,7 +201,7 @@ This syntax is similar to Perl's POD.
       (:use #:cl)
       (:export #:sample-function))
     (in-package #:sample)
-    (named-readtables:in-readtable papyrus:md-syntax)
+    (named-readtables:in-readtable papyrus:pod-syntax)
 
     =pod
 
