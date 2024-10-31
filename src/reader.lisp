@@ -25,7 +25,10 @@
   (do ((line (read-line s nil nil) (read-line s nil nil))
        (buffer nil)
        (codeblock nil))
-      ((not line) (read-from-string (format nil "(progn ~{~a~%~})" (reverse buffer))))
+      ((not line)
+       (progn
+         (print (reverse buffer))
+         (read-from-string (format nil "(progn ~{~a~%~})" (reverse buffer)))))
     (cond ((<? (search "```lisp" line) 1) (setq codeblock t))
           ((<? (search "```" line) 1) (setq codeblock nil))
           (codeblock (push line buffer)))))
