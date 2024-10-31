@@ -1,6 +1,6 @@
 (defpackage #:papyrus/src/reader
   (:use #:cl)
-  (:export #:markdown-reader #:org-reader #:pod-reader))
+  (:export #:md-reader #:org-reader #:pod-reader))
 (in-package #:papyrus/src/reader)
 
 (defun <? (&rest args)
@@ -10,7 +10,7 @@
     (apply #'< (mapcar #'nil-to-inf args))))
 
 (defun org-reader (s a)
-  (declare (ignore a b))
+  (declare (ignore a))
   (do ((line (read-line s nil nil) (read-line s nil nil))
        (buffer nil)
        (codeblock nil))
@@ -20,8 +20,8 @@
           ((<? (search "#+END_SRC" line) 1) (setq codeblock nil))
           (codeblock (push line buffer)))))
 
-(defun markdown-reader (s a)
-  (declare (ignore a b))
+(defun md-reader (s a)
+  (declare (ignore a))
   (do ((line (read-line s nil nil) (read-line s nil nil))
        (buffer nil)
        (codeblock nil))

@@ -14,7 +14,7 @@
       (set-macro-character char #'new-fn))))
 
 (defun enable-md-syntax()
-  (set-macro-character-once #\Newline #'markdown-reader))
+  (set-macro-character-once #\Newline #'md-reader))
 
 (defun enable-org-syntax ()
   (set-macro-character-once #\Newline #'org-reader))

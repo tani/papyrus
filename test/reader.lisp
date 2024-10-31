@@ -35,7 +35,7 @@ This is a code block
 
 ")
 
-(define-test markdown-reader-test
+(define-test md-reader-test
   (let ((stream (make-string-input-stream md)))
     (is equalp
      '(progn
@@ -43,7 +43,7 @@ This is a code block
          (print "Hello, World!"))
        (defun hello-world-2 ()
          (print "Hello, World!")))
-     (markdown-reader stream nil))))
+     (md-reader stream nil))))
 
 (defvar org "
 
