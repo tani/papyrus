@@ -21,6 +21,7 @@
           src = ./.;
           systems = [pname "${pname}/test"];
           lispLibs = with pkgs.sbcl.pkgs; [
+            named-readtables
             parachute
           ];
         };

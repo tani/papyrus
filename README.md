@@ -2,7 +2,7 @@
     (defpackage #:papyrus/README
       (:use #:cl))
     (in-package #:papyrus/README)
-    (papyrus:enable-md-syntax)
+    (named-readtables:in-readtable papyrus:md-syntax)
 
 # Papyrus
 
@@ -68,9 +68,9 @@ specifies the required packages. Please do not forget it.
 
         (defpackage #:tutorial
           (:use #:cl)
-          (:export #:hello)
+          (:export #:hello))
         (in-package #:tutorial)
-        (papyrus:enable-md-syntax)
+        (named-readtables:in-readtable papyrus:md-syntax)
 
     # My First Document
 
@@ -136,7 +136,7 @@ Let's write a small project whose files are the following.
       :version "0.1"
       :author "Your name"
       :license "MIT"
-      :depends-on (#:papyrus)
+      :depends-on (#:papyrus #:named-readtables)
       :components ((:md "tutorial"))
       :description "A Literate Programming Framework")
 
@@ -163,7 +163,7 @@ The codeblock enclosed by ` ```lisp ` and ` ``` ` is evaluated.
           (:use #:cl)
           (:export #:sample-function))
         (in-package #:sample)
-        (papyrus:enable-md-syntax)
+        (named-readtables:in-readtable papyrus:md-syntax)
 
     # Sample
 
@@ -183,7 +183,7 @@ Unlike Markdown, any `#+CL:` tags are ignored when rendering the content to HTML
     #+CL:* *   (:use #:cl)
     #+CL:* *   (:export #:sample-function))
     #+CL:* * (in-package #:sample)
-    #+CL:* * (papyrus:enable-org-syntax)
+    #+CL:* * (named-readtables:in-readtable papyrus:md-syntax)
 
     This is a sample code. The following function just says "Hello, world!"
 
@@ -201,7 +201,7 @@ This syntax is similar to Perl's POD.
       (:use #:cl)
       (:export #:sample-function))
     (in-package #:sample)
-    (papyrus:enable-pod-syntax)
+    (named-readtables:in-readtable papyrus:md-syntax)
 
     =pod
 
