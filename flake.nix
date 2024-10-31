@@ -1,5 +1,5 @@
 {
-  description = "A flake for fibonacci";
+  description = "A flake for papyrus";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -15,13 +15,12 @@
       systems = import systems;
       perSystem = {pkgs, ...}: let
         pname = "papyrus";
-        version = "1.1.0";
+        version = "2.0.0";
         lispLib = pkgs.sbcl.buildASDFSystem {
           inherit pname version;
           src = ./.;
           systems = [pname "${pname}/test"];
           lispLibs = with pkgs.sbcl.pkgs; [
-            named-readtables
             parachute
           ];
         };

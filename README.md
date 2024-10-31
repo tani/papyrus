@@ -1,8 +1,8 @@
 
     (defpackage #:papyrus/README
-      (:use #:cl #:papyrus #:named-readtables))
+      (:use #:cl))
     (in-package #:papyrus/README)
-    (in-readtable :papyrus)
+    (papyrus:enable-md-syntax)
 
 # Papyrus
 A literate programming tool for	Common Lisp.
@@ -60,17 +60,16 @@ This is a new project. Please send me your feedback if you find any issues.
 In *Papyrus*, you can write any text like the following,
 and make the file extension `md`. Also, you can write with Markdown,
 especially CommonMark whose specification can be found at
-[commonmark.org](https://commonmark.org).
-*Papyrus* only evaluates codeblocks
-*after* `(in-readtable ...)` that are enclosed by ` ```lisp ` and ` ``` `. The
-indented codeblock *before* `(in-readtable ...)` is important, as this codeblock
+[commonmark.org](https://commonmark.org). *Papyrus* only evaluates codeblocks
+*after* `(enable-md-syntax)` that are enclosed by ` ```lisp ` and ` ``` `.
+The indented codeblock *before* `(enable-md-syntax)` is important, as this codeblock
 specifies the required packages. Please do not forget it.
 
         (defpackage #:tutorial
-          (:use #:cl #:papyrus #:named-readtables)
+          (:use #:cl)
           (:export #:hello)
         (in-package #:tutorial)
-        (in-readtable :papyrus-markdown)
+        (papyrus:enable-md-syntax)
 
     # My First Document
 
@@ -123,7 +122,7 @@ Let's write a small project whose files are the following.
 `tutorial.md` is the file written in the **REPL** section, and
 `tutorial.asd` is this:
 
-    (defclass markdown (cl-source-file)
+    (defclass md (cl-source-file)
       ((type :initform "md")))
 
     (defclass org (cl-source-file)
@@ -136,8 +135,8 @@ Let's write a small project whose files are the following.
       :version "0.1"
       :author "Your name"
       :license "MIT"
-      :depends-on (:papyrus :named-readtables)
-      :components ((:markdown "tutorial"))
+      :depends-on (#:papyrus)
+      :components ((:md "tutorial"))
       :description "A Literate Programming Framework")
 
 Now that you have both files, `tutorial.md` and `tutorial.asd`,
@@ -154,16 +153,16 @@ Of course, users of your project won't need to load anything else.
 
 ## Reference
 
-### `papyrus` or `papyrus-markdown`
+### `enable-md-syntax`
 
-This is a readtable defined by `named-readtables`. You can use this with
-`named-readtable:in-readtable` like this document.
+This is a readtable defined for Markdown.
+The codeblock enclosed by ` ```lisp ` and ` ``` ` is evaluated.
 
         (defpackage #:sample
-          (:use #:cl #:named-readtables #:papyrus)
+          (:use #:cl)
           (:export #:sample-function))
         (in-package #:sample)
-        (in-readtable :papyrus-markdown)
+        (papyrus:enable-md-syntax)
 
     # Sample
 
@@ -173,17 +172,17 @@ This is a readtable defined by `named-readtables`. You can use this with
     (defun sample-function () (princ "Hello, world!"))
     ```
 
-### `papyrus-org`
+### `enable-org-syntax`
 
-This is a readtable defined by `named-readtables` for org-mode.
-You can use this with `named-readtable:in-readtable` like this document.
+This is a readtable for org-mode.
+The codeblock enclosed by ` #+BEGIN_SRC lisp :tangle yes ` and ` #+END_SRC ` is evaluated.
 Unlike Markdown, any `#+CL:` tags are ignored when rendering the content to HTML.
 
     #+CL:* * (defpackage #:sample
-    #+CL:* *   (:use #:cl #:named-readtables #:papyrus)
+    #+CL:* *   (:use #:cl)
     #+CL:* *   (:export #:sample-function))
     #+CL:* * (in-package #:sample)
-    #+CL:* * (in-readtable :papyrus-org)
+    #+CL:* * (papyrus:enable-org-syntax)
 
     This is a sample code. The following function just says "Hello, world!"
 
@@ -191,16 +190,17 @@ Unlike Markdown, any `#+CL:` tags are ignored when rendering the content to HTML
     (defun sample-function () (princ "Hello, world!"))
     #+END_SRC
 
-### `papyrus-pod`
+### `enable-pod-syntax`
 
 This is a readtable defined by `named-readtables` for POD.
-You can use this with `named-readtable:in-readtable` like this document.
+The codeblock outside of `=pod` and `=cut` is evaluated.
+This syntax is similar to Perl's POD.
 
     (defpackage #:sample
-      (:use #:cl #:named-readtables #:papyrus)
+      (:use #:cl)
       (:export #:sample-function))
     (in-package #:sample)
-    (in-readtable :papyrus-pod)
+    (papyrus:enable-pod-syntax)
 
     =pod
 
