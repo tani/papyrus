@@ -6,16 +6,16 @@
 
 (defreadtable #:papyrus
     (:merge :standard)
-  (:dispatch-macro-char #\# #\Space #'markdown-reader))
+  (:macro-char #\Newline #'markdown-reader))
 
 (defreadtable #:papyrus-markdown
     (:merge :standard)
-  (:dispatch-macro-char #\# #\Space #'markdown-reader))
+  (:macro-char #\Newline #'markdown-reader))
 
 (defreadtable #:papyrus-org
     (:merge :standard)
-  (:dispatch-macro-char #\# #\Space #'org-reader))
+  (:macro-char #\Newline #'org-reader))
 
 (defreadtable #:papyrus-pod
     (:merge :standard)
-  (:macro-char #\= #'pod-reader))
+  (:macro-char #\Newline #'pod-reader))

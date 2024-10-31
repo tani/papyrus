@@ -43,7 +43,7 @@ This is a code block
          (print "Hello, World!"))
        (defun hello-world-2 ()
          (print "Hello, World!")))
-     (markdown-reader stream nil nil))))
+     (markdown-reader stream nil))))
 
 (defvar org "
 
@@ -84,7 +84,7 @@ This is a code block
          (print "Hello, World!"))
        (defun hello-world-2 ()
          (print "Hello, World!")))
-     (org-reader stream nil nil))))
+     (org-reader stream nil))))
 
 (defvar pod "
 =pod

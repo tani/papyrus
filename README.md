@@ -57,13 +57,13 @@ This is a new project. Please send me your feedback if you find any issues.
 
 ## Tutorials
 
-In *Papyrus*, you can write any text but you have to write a title (`# `) at
-the top of the document, like the following, and make the file extension
-`.md`. Also, you can write with Markdown,
+In *Papyrus*, you can write any text like the following,
+and make the file extension `md`. Also, you can write with Markdown,
 especially CommonMark whose specification can be found at
-[commonmark.org](https://commonmark.org). *Papyrus* only evaluates codeblocks
-*after* the title (`# `) that are enclosed by ` ```lisp ` and ` ``` `. The
-indented codeblock *before* the title (`# `) is important, as this codeblock
+[commonmark.org](https://commonmark.org).
+*Papyrus* only evaluates codeblocks
+*after* `(in-readtable ...)` that are enclosed by ` ```lisp ` and ` ``` `. The
+indented codeblock *before* `(in-readtable ...)` is important, as this codeblock
 specifies the required packages. Please do not forget it.
 
         (defpackage #:tutorial
@@ -184,7 +184,6 @@ Unlike Markdown, any `#+CL:` tags are ignored when rendering the content to HTML
     #+CL:* *   (:export #:sample-function))
     #+CL:* * (in-package #:sample)
     #+CL:* * (in-readtable :papyrus-org)
-    # -- Papyrus --
 
     This is a sample code. The following function just says "Hello, world!"
 
