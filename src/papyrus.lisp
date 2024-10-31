@@ -13,11 +13,14 @@
               (funcall fn stream char)))
       (set-macro-character char #'new-fn))))
 
-(defun enable-md-syntax()
-  (set-macro-character-once #\Newline #'md-reader))
+(defmacro enable-md-syntax ()
+  `(eval-when (:compile-toplevel :load-toplevel :execute)
+     (set-macro-character-once #\Newline #'md-reader)))
 
-(defun enable-org-syntax ()
-  (set-macro-character-once #\Newline #'org-reader))
+(defmacro enable-org-syntax ()
+  `(eval-when (:compile-toplevel :load-toplevel :execute)
+     (set-macro-character-once #\Newline #'org-reader)))
 
-(defun enable-pod-syntax ()
-  (set-macro-character-once #\Newline #'pod-reader))
+(defmacro enable-pod-syntax ()
+  `(eval-when (:compile-toplevel :load-toplevel :execute)
+     (set-macro-character-once #\Newline #'pod-reader)))
