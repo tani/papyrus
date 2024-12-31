@@ -6,7 +6,7 @@
 
 # Papyrus
 
-A literate programming tool for	Common Lisp.
+A literate programming tool for Common Lisp + Markdown / Org mode / POD 
 
 ## About This Project
 
