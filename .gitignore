@@ -16,3 +16,4 @@
 *.wx64fsl
 *.wx32fsl
 .qlot/
+coverage/

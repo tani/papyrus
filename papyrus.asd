@@ -8,7 +8,7 @@
   :in-order-to ((test-op (test-op #:papyrus/test))))
 
 (defsystem #:papyrus/test
-  :depends-on (#:parachute #:papyrus/test/reader)
-  :perform (test-op (op c)
-             (symbol-call :parachute :test :papyrus/test/reader)))
+  :depends-on (#:fiveam #:papyrus/test/reader)
+  :perform (test-op (o c)
+             (symbol-call :fiveam :run! :papyrus)))
 

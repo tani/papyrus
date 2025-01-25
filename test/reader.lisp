@@ -1,6 +1,9 @@
 (defpackage #:papyrus/test/reader
-  (:use #:cl #:parachute #:papyrus/src/reader))
+  (:use #:cl #:fiveam #:papyrus/src/reader))
 (in-package #:papyrus/test/reader)
+
+(def-suite :papyrus)
+(in-suite :papyrus)
 
 (defvar md "
 
@@ -35,15 +38,15 @@ This is a code block
 
 ")
 
-(define-test md-reader-test
+(test md-reader-test
   (let ((stream (make-string-input-stream md)))
-    (is equalp
+    (is (equalp
      '(progn
        (defun hello-world-1 ()
          (print "Hello, World!"))
        (defun hello-world-2 ()
          (print "Hello, World!")))
-     (md-reader stream nil))))
+     (md-reader stream nil)))))
 
 (defvar org "
 
@@ -76,15 +79,15 @@ This is a code block
 
 ")
 
-(define-test org-reader-test
+(test org-reader-test
   (let ((stream (make-string-input-stream org)))
-    (is equalp
+    (is (equalp
      '(progn
        (defun hello-world-1 ()
          (print "Hello, World!"))
        (defun hello-world-2 ()
          (print "Hello, World!")))
-     (org-reader stream nil))))
+     (org-reader stream nil)))))
 
 (defvar pod "
 =pod
@@ -127,12 +130,12 @@ This is a code block
 
 ")
 
-(define-test pod-reader-test
+(test pod-reader-test
   (let ((stream (make-string-input-stream pod)))
-    (is equalp
+    (is (equalp
      '(progn
        (defun hello-world-1 ()
          (print "Hello, World!"))
        (defun hello-world-2 ()
          (print "Hello, World!")))
-     (pod-reader stream nil))))
+     (pod-reader stream nil)))))
