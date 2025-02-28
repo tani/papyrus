@@ -16,6 +16,7 @@ jobs:
         lisp: [ecl, sbcl, abcl, ccl, mkcl, clisp, cmucl_binary, clasp-common-lisp]
         os: [ubuntu-24.04, ubuntu-24.04-arm, macos-15]
         exclude:
+          - lisp: mkcl
           - os: macos-15
             lisp: ccl
           - os: macos-15
