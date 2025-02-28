@@ -25,7 +25,7 @@
             "sbcl"
             "ecl"
             "ccl"
-            "mkcl"
+            # "mkcl"
             "clisp"
             "cmucl_binary"
             "clasp-common-lisp"
