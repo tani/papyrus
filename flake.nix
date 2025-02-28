@@ -1,7 +1,7 @@
 {
   description = "A flake for papyrus";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
   outputs = inputs@{ nixpkgs, flake-parts, ... }:
@@ -16,10 +16,7 @@
           ## Source directory
           src = ./.;
           ## Dependencies
-          lispLibs = lisp: with lisp.pkgs; [
-            fiveam
-            named-readtables
-          ];
+          lispLibs = lisp: with lisp.pkgs; [ named-readtables fiveam ];
           ## Non-Lisp dependencies
           nativeLibs = with pkgs; [ ];
           ## Supported Lisp implementations
@@ -49,11 +46,12 @@
             ver2 = builtins.map (s: builtins.replaceStrings [''"''] [""] s) ver1;
           in ver2;
           version = builtins.head versions;
-          isAvailable = impl:
-            let lisp = pkgs.${impl};
-            in (builtins.tryEval lisp).success
-            && (builtins.elem system lisp.meta.platforms)
-            && (!lisp.meta.broken);
+          isAvailable = impl: let
+            basePkgs = import nixpkgs { inherit system; overlays = []; };
+            lisp = basePkgs.${impl};
+          in (builtins.tryEval lisp).success
+             && (builtins.elem system lisp.meta.platforms)
+             && (!lisp.meta.broken);
           availableLispImpls = builtins.filter isAvailable lispImpls;
           LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath nativeLibs;
           unbundledPackage = { lisp, evalFlag, extraArgs }: rec {
@@ -188,6 +186,13 @@
           };
           apps = impl: [
             {
+              name = "main-" + impl;
+              value = {
+                type = "app";
+                program = recipe.${impl}.mainExe;
+              };
+            }
+            {
               name = "test-" + impl;
               value = {
                 type = "app";
@@ -197,19 +202,30 @@
           ];
           packages = impl: [
             {
+              name = "main-" + impl;
+              value = recipe.${impl}.mainExe;
+            }
+            {
               name = "lib-" + impl;
               value = recipe.${impl}.mainLib;
             }
           ];
           devPackages = impl:
             pkgs.${impl}.withPackages (ps: lispLibs pkgs.${impl});
-          overlays = impl: {
-            ${impl} = pkgs.${impl}.withOverrides
-              (self: super: { ${pname} = config.packages."lib-${impl}"; });
-          };
+          overlays = impl: [
+            {
+              name = impl;
+              value = pkgs.${impl}.withOverrides
+                (self: super: { ${pname} = config.packages."lib-${impl}"; });
+            }
+            {
+              name = "${pname}-${impl}";
+              value = config.packages."main-${impl}";
+            }
+          ];
         in {
           overlayAttrs =
-            builtins.listToAttrs (builtins.map overlays availableLispImpls);
+            builtins.listToAttrs (builtins.concatMap overlays availableLispImpls);
           devShells.default = pkgs.mkShell {
             inherit LD_LIBRARY_PATH;
             shellHook = ''
