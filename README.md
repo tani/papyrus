@@ -213,6 +213,39 @@ This syntax is similar to Perl's POD.
 
 ## Appendix
 
+### Nix overlays
+- [nix flakes without any frameworks.](https://github.com/tani/nix-common-lisp?tab=readme-ov-file#overlays)
+  ```nix
+  let
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          fibonacci.overlays.default
+        ];
+      };
+  ```
+- [flake-parts](https://flake.parts/overlays.html?highlight=overlays#consuming-an-overlay)
+  ```nix
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    papyrus = {
+      url = "github:tani/papyrus";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+  ```
+  ```nix
+    perSystem = { system, ... }: {
+      _module.args.pkgs = import inputs.nixpkgs {
+        inherit system;
+        overlays = [
+          inputs.papyrus.overlays.default
+        ];
+        config = { };
+      };
+    };
+  ```
 ### Emacs Lisp
 
 ### Recommended way
