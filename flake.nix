@@ -54,7 +54,7 @@
              && (!lisp.meta.broken);
           availableLispImpls = builtins.filter isAvailable lispImpls;
           LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath nativeLibs;
-          unbundledPackage = { lisp, evalFlag, extraArgs }: rec {
+          unbundledPackage = { lisp, mainProgram, evalFlag, extraArgs }: rec {
             mainLib = lisp.buildASDFSystem {
               inherit pname version src systems nativeLibs;
               lispLibs = lispLibs lisp;
@@ -64,7 +64,7 @@
             };
             mainExe = pkgs.writeShellScriptBin pname ''
               export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
-              ${lisp'}/bin/${lisp'.meta.mainProgram} ${extraArgs} ${evalFlag} '(require "asdf")' ${evalFlag} "$(cat <<EOF
+              ${lisp'}/bin/${mainProgram} ${extraArgs} ${evalFlag} '(require "asdf")' ${evalFlag} "$(cat <<EOF
                 (let* ((_ (asdf:load-system :${pname}))
                        (component (asdf:find-system :${pname}))
                        (entry-point (asdf/system:component-entry-point component))
@@ -76,7 +76,7 @@
             '';
             testExe = pkgs.writeShellScriptBin "${pname}-test" ''
               export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
-              ${lisp'}/bin/${lisp'.meta.mainProgram} ${extraArgs} ${evalFlag} '(require "asdf")' ${evalFlag} "$(cat <<EOF
+              ${lisp'}/bin/${mainProgram} ${extraArgs} ${evalFlag} '(require "asdf")' ${evalFlag} "$(cat <<EOF
                 (progn
                   (asdf:test-system :${pname})
                   (quit))
@@ -84,7 +84,7 @@
               )" -- "$@"
             '';
           };
-          bundledPackage = { lisp, evalFlag, extraArgs }: rec {
+          bundledPackage = { lisp, mainProgram, evalFlag, extraArgs }: rec {
             mainLib = lisp.buildASDFSystem {
               inherit pname version src systems nativeLibs;
               lispLibs = lispLibs lisp;
@@ -99,7 +99,7 @@
               installPhase = ''
                 export HOME=$TMPDIR
                 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
-                ${lisp'}/bin/${lisp'.meta.mainProgram} ${extraArgs} ${evalFlag} '(require "asdf")' ${evalFlag} "$(cat <<EOF
+                ${lisp'}/bin/${mainProgram} ${extraArgs} ${evalFlag} '(require "asdf")' ${evalFlag} "$(cat <<EOF
                   (let ((system (asdf:find-system :${pname})))
                     (setf (asdf/system:component-build-pathname system) #p"$out/bin/${pname}")
                     (asdf:make :${pname})
@@ -114,7 +114,7 @@
             '';
             testExe = pkgs.writeShellScriptBin "${pname}-test" ''
               export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
-              ${lisp'}/bin/${lisp'.meta.mainProgram} ${extraArgs} ${evalFlag} '(require "asdf")' ${evalFlag} "$(cat <<EOF
+              ${lisp'}/bin/${mainProgram} ${extraArgs} ${evalFlag} '(require "asdf")' ${evalFlag} "$(cat <<EOF
                 (progn
                   (asdf:test-system :${pname})
                   (quit))
@@ -126,9 +126,10 @@
             lisp = pkgs.sbcl.withPackages (ps: lispLibs pkgs.sbcl) // {
               inherit (pkgs.sbcl) meta;
             };
+            mainProgram = "sbcl";
             program = pkgs.writeShellScriptBin "${pname}-coverage" ''
               export CL_SOURCE_REGISTRY=$PWD
-              ${lisp}/bin/${lisp.meta.mainProgram} --noinform --disable-debugger <<EOF
+              ${lisp}/bin/${mainProgram} --noinform --disable-debugger <<EOF
                 (require "asdf")
                 (require :sb-cover)
                 (declaim (optimize sb-cover:store-coverage-data))
@@ -145,41 +146,49 @@
           recipe = {
             sbcl = bundledPackage {
               lisp = pkgs.sbcl;
+              mainProgram = "sbcl";
               evalFlag = "--eval";
               extraArgs = "--noinform --disable-debugger";
             };
             ccl = bundledPackage {
               lisp = pkgs.ccl;
+              mainProgram = "ccl";
               evalFlag = "--eval";
               extraArgs = "--quiet";
             };
             clisp = unbundledPackage {
               lisp = pkgs.clisp;
+              mainProgram = "clisp";
               evalFlag = "-x";
               extraArgs = "--quiet";
             };
             ecl = unbundledPackage {
               lisp = pkgs.ecl;
+              mainProgram = "ecl";
               evalFlag = "--eval";
               extraArgs = "";
             };
             cmucl_binary = unbundledPackage {
               lisp = pkgs.cmucl_binary;
+              mainProgram = "lisp";
               evalFlag = "-eval";
               extraArgs = "-quiet";
             };
             abcl = unbundledPackage {
               lisp = pkgs.abcl;
+              mainProgram = "abcl";
               evalFlag = "--eval";
               extraArgs = "--noinform";
             };
             clasp-common-lisp = unbundledPackage {
               lisp = pkgs.clasp-common-lisp;
+              mainProgram = "clasp";
               evalFlag = "--eval";
               extraArgs = "--noinform";
             };
             mkcl = unbundledPackage {
               lisp = pkgs.mkcl;
+              mainProgram = "mkcl";
               evalFlag = "-eval";
               extraArgs = "--quiet";
             };
