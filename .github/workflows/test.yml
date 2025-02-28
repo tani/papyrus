@@ -1,0 +1,50 @@
+name: Run Nix Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        lisp: [ecl, sbcl, abcl, ccl, mkcl, clisp, cmucl_binary, clasp-common-lisp]
+        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-15]
+        exclude:
+          - os: macos-15
+            lisp: ccl
+          - os: macos-15
+            lisp: mkcl
+          - os: macos-15
+            lisp: clasp-common-lisp
+          - os: macos-15
+            lisp: cmucl_binary
+          - os: ubuntu-24.04-arm
+            lisp: ccl
+          - os: ubuntu-24.04-arm
+            lisp: mkcl
+          - os: ubuntu-24.04-arm
+            lisp: clasp-common-lisp
+          - os: ubuntu-24.04-arm
+            lisp: cmucl_binary
+
+    name: Test on ${{ matrix.os }} with ${{ matrix.lisp }}
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v30
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+
+      - name: Run Nix Test
+        run: nix run .#test-${{ matrix.lisp }}
