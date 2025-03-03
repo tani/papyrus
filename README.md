@@ -216,11 +216,21 @@ This syntax is similar to Perl's POD.
 ### Nix overlays
 - [nix flakes without any frameworks.](https://github.com/tani/nix-common-lisp?tab=readme-ov-file#overlays)
   ```nix
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    papyrus = {
+      url = "github:tani/papyrus";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+  ```
+  ```nix
   let
       pkgs = import nixpkgs {
         inherit system;
         overlays = [
-          fibonacci.overlays.default
+          inputs.papyrus.overlays.default
         ];
       };
   ```
